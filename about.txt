@@ -3,3 +3,47 @@
     1 proyecto - En equipo, de 2-3 integrantes
         Tiene que aplicar lo que veamos en la materia (Mínimo 2)
         No tiene que ser bonito, tiene que funcionar
+
+    Diferencia entre compilado e interpretado:
+        Código fuente: Yo escribo
+        Cuando se lo doy a la pc, al compilador, toma cada una
+        de las instrucciones y las traduce a lenguaje de máquina, binario
+
+        Compliador: Revisa todo el código y revisa errores de sintaxis, 
+        entonces hace el ejecutable
+
+        (Compliado>>Interpretado)
+
+        Interpretado: (php,py) Va línea por línea y la ejecuta, no revisa
+        los errores de sintaxis, truena hasta ver el error.
+
+        .NET es medio compilado 
+
+        En el interpretado no defino variables
+
+        Perceptron - Neurona básica
+
+        Templates
+
+        Apuntadores: Identificador, tipo y tamaño
+
+
+        3 2 1 0
+
+        0 0 0 1  == 1
+        8 4 2 1
+
+
+        5 2 1 0
+        1 0 1 0  == -2
+
+        Esto es ser un entero 
+
+        Tipo de dato: ¿Cómo almacenar los datos adentro de los bytes?
+        En enteros uno de los byts funcionan para los negativos
+
+        Float:
+
+        Sabe que una parte pertenece a la base y otra al exponente
+        
+
