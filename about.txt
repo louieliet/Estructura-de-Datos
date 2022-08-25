@@ -47,3 +47,74 @@
         Sabe que una parte pertenece a la base y otra al exponente
         
 
+
+2da clase:
+    Void -> Regreso algo pero no me interesa
+    regresa un entero porque es más fácil de entender
+    Void -> No config default, no hay manera de manejar ese dato
+    La pc no lo va a entender de una forma preestablecida
+
+    *void = apunta a un dato que no nos interesa, pero sí guardas algo (dirección)
+    
+    Memoria de la pc:
+        a - int - 5
+
+        Paso 1 -> int a; (En la memoria hay algo con cara de entero (Ruido electrónico))
+        Es fundamental inicializar variables para que no agarre basura
+
+        Paso 2 -> a = 5; (Se quita la basura y aparece el 5)
+        &a -> Dirección de memoria
+        int* b = &a;
+
+        void* c = (void*) b;
+
+        (*b)++;
+
+        Si hago (*c)++ truena porque no le puedo sumar 1 a void
+        En vez:
+            (*((int*)c))++
+
+    New -> Además de pensar en asignar memoria, lo ve como un objeto
+
+    int v[5] -> Arreglo de 5 enteros
+
+    int* v = null -> La mejor inicialización
+
+    v = (int*)malloc(sizeof(int)*l); -> Ya aparta la memoria y me regresa la direc de memoria
+    de la primer celda (indice 0)
+    
+    v[0] = 1;
+
+    Nadie impide esto: v[10] = null; pero explota XD (la base de troyanos)
+
+    Para recorrer:
+        int *p = v;
+        p[0]++; (Convertir a 2)
+        (*p)++; (Ahora convierte a 3)
+        p++ -> Pasa a la siguiente direceción de memoria de ese arreglo
+        *p -= 2; (convierte a 5)
+
+    free(v);
+    v = null;
+    p = null;
+
+
+    Matriz:
+    int **m = null; m guarda la dirc de memoria de algo que ese algo apunta a un entero
+
+    m = (int**)malloc(sizeof(int*)*3);
+    m[0] = (int*)malloc(sizeof(int)*3);
+    m[1] = ...
+    m[2] = ....
+
+    m[0][0] = 1;
+
+    Podemos generar matrices no cuadradas
+
+    4 frees(), porque hice 4 mallocs
+
+
+5ta clase:
+        
+        else if (lStr == "cos") {lv03 = cos(lv02)};
+            else if (lStr == "tan") {lv03 = tan(lv02)};
