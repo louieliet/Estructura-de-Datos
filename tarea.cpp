@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
@@ -12,7 +13,25 @@ int calculator(string cadena);
 int main()
 {
 
-    calculator("11;2;pow");
+    string cadena[2] = {"11;","2;"};
+
+    string valores[20];
+
+    for(int i=0; i<20; i++)
+    {
+        valores[i] = to_string(i-10)+";";
+    }
+
+    for(int i=0; i<20; i++)
+    {
+        cout << valores[i];
+    }
+
+
+    /*for(int i=0; i<2; i++)
+    {
+        calculator(cadena[i]+cadena[i+1]);
+    };*/
 
 };
 
