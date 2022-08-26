@@ -118,3 +118,15 @@
         
         else if (lStr == "cos") {lv03 = cos(lv02)};
             else if (lStr == "tan") {lv03 = tan(lv02)};
+
+
+Estructuras:
+    Struct
+    Pilas 
+    Colas
+    Listas
+    Cortina
+    Arboles binarios
+    Arboles con cubetas (Multicamino) -> No se desbalancean
+        Guardo llaves que contienen datos (Indices de las bases de datos)
+    Grafos
