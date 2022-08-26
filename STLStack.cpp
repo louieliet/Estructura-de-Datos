@@ -3,40 +3,42 @@
 #include <string>
 #include <sstream>
 #include <cmath>
-#include <vector>
-
 using namespace std;
 
-int calculator(string cadena);
-
+void foo(string);
 
 int main()
 {
+    string valorx[81];
+    string valory[81];
+    double valorz[81];
+    double xo = -10;
+    valorx[0] = "-10";
 
-    string cadena[2] = {"11;","2;"};
-
-    string valores[20];
-
-    for(int i=0; i<20; i++)
+    //Llenando el arreglo de valorx de -10 hasta 10 con intervalos de 0.25
+    for(int i=1; i<81; i++)
     {
-        valores[i] = to_string(i-10)+";";
+        xo = xo+0.25;
+        valorx[i] = to_string(xo);
     }
 
-    for(int i=0; i<20; i++)
+    //Llenando el arreglo de valory de 0 a 81
+    for(int i=0; i<81; i++)
     {
-        cout << valores[i];
+        valory[i] = to_string(i);
     }
 
-
-    /*for(int i=0; i<2; i++)
+    //Evaluando la función con los valores de los arrays previos y tabulando
+    for(int i=0; i<81; i++)
     {
-        calculator(cadena[i]+cadena[i+1]);
-    };*/
-
+        cout << "x = " << valorx[i] << ", y = " << valory[i] << ", z = ";
+        foo("0.5;"+valorx[i]+";*;10;+;sin;"+valory[i]+";0.3;*;5;+;cos;/");
+        cout << endl;
+    }
+      
 };
 
-
-int calculator(string cadena)
+void foo(string cadena)
 {
 
     stack<double> lStack;
@@ -45,7 +47,7 @@ int calculator(string cadena)
     string lStr = "";
 
     while (getline(lExp, lStr, ';')) {
-        cout << lStr << endl;
+        //cout << lStr << endl;
         if (isdigit(lStr[0])) {
             lStack.push(stod(lStr));
         }
@@ -85,8 +87,8 @@ int calculator(string cadena)
     }
 
     lV03 = lStack.top();
-    cout << "Res = " << lV03 << endl;
-
-    return 0;
+    cout << lV03 << endl;
 }
+
+
 
