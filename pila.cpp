@@ -3,21 +3,18 @@
 #include <string>
 #include <sstream>
 #include <cmath>
-
 using namespace std;
 
 void foo(string);
 
 int main()
 {
-    
     string valorx[81];
     string valory[81];
     double valorz[81];
     double xo = -10;
     valorx[0] = "-10";
 
-    
     //Llenando el arreglo de valorx de -10 hasta 10 con intervalos de 0.25
     for(int i=1; i<81; i++)
     {
@@ -38,10 +35,8 @@ int main()
         foo("0.5;"+valorx[i]+";*;10;+;sin;"+valory[i]+";0.3;*;5;+;cos;/");
         cout << endl;
     }
-
       
 };
-
 
 void foo(string cadena)
 {
