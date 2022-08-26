@@ -6,24 +6,44 @@
 
 using namespace std;
 
-int foo(string);
+void foo(string);
 
 int main()
 {
     
-    string valorx[3] = {"-1","0","1"};
-    string valory[3] = {"1","2","3"};
+    string valorx[81];
+    string valory[81];
+    double valorz[81];
+    double xo = -10;
+    valorx[0] = "-10";
 
-    for(int i=0; i<3; i++)
+    
+    //Llenando el arreglo de valorx de -10 hasta 10 con intervalos de 0.25
+    for(int i=1; i<81; i++)
     {
-        foo("0.5;"+valorx[i]+";*;10;+;sin"); 
+        xo = xo+0.25;
+        valorx[i] = to_string(xo);
+    }
+
+    //Llenando el arreglo de valory de 0 a 81
+    for(int i=0; i<81; i++)
+    {
+        valory[i] = to_string(i);
+    }
+
+    //Evaluando la función con los valores de los arrays previos y tabulando
+    for(int i=0; i<81; i++)
+    {
+        cout << "x = " << valorx[i] << ", y = " << valory[i] << ", z = ";
+        foo("0.5;"+valorx[i]+";*;10;+;sin;"+valory[i]+";0.3;*;5;+;cos;/");
+        cout << endl;
     }
 
       
 };
 
 
-int foo(string cadena)
+void foo(string cadena)
 {
 
     stack<double> lStack;
@@ -32,7 +52,7 @@ int foo(string cadena)
     string lStr = "";
 
     while (getline(lExp, lStr, ';')) {
-        cout << lStr << endl;
+        //cout << lStr << endl;
         if (isdigit(lStr[0])) {
             lStack.push(stod(lStr));
         }
@@ -72,6 +92,8 @@ int foo(string cadena)
     }
 
     lV03 = lStack.top();
-    cout << "Res = " << lV03 << endl;
-    return 0;
+    cout << lV03 << endl;
 }
+
+
+
