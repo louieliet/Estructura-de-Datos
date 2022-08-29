@@ -130,3 +130,15 @@ Estructuras:
     Arboles con cubetas (Multicamino) -> No se desbalancean
         Guardo llaves que contienen datos (Indices de las bases de datos)
     Grafos
+
+
+Bank:
+    Cola fija, if full() = true, calcular rebote, contar a las personas que quisieron entrar a la Cola
+    Generar personas randoms, pero tiene un límite, después de 1000 personas. 
+    Cajero = Si hay persona en la cola, que pase 
+    El banco funciona por ciclos, hay eventos que solo suceden en 1 loop
+    En cada ciclo se genera 1 persona
+    ¿Cuántos loops tomó la simulación?
+    Las cajas hacen 1 operación por ciclo(O pasar a la persona, o atenderla), por lo que no puede pasar gente
+    done = 1000 personas, queue empty, cajas empty
+        mostrar #ciclos, #rebotes
