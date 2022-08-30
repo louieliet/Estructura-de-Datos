@@ -214,7 +214,7 @@ void FiFo<T>::resize(void)
 
 #define K_MAX_Personas 1000
 #define K_MAX_Lugares 20
-#define K_MAX_Cajas 4
+#define K_MAX_Cajas 3
 #define K_MAX_Opers 5
 
 int random(int pMin, int pMax)
