@@ -107,7 +107,7 @@ void FiFo<T>::pop(void)
 
     if (aData) {
         if (!isEmpty()) {
-            for(int lIdx = 0; lIdx < aCur; lIdx++)
+            for(int lIdx = 0; lIdx < aMax - 1; lIdx++)
             {
                 aData[lIdx] = aData[lIdx+1];
             }
@@ -213,8 +213,8 @@ void FiFo<T>::resize(void)
 
 
 #define K_MAX_Personas 1000
-#define K_MAX_Lugares 10
-#define K_MAX_Cajas 2
+#define K_MAX_Lugares 20
+#define K_MAX_Cajas 4
 #define K_MAX_Opers 5
 
 int random(int pMin, int pMax)
@@ -231,15 +231,99 @@ int main()
     int lCiclos = 0;
     int lRebotes = 0;
     int lOpers = 0;
+    bool lSalida = false;
+    int lCajaVacia = 0;
+
+    for(int x = 0; x < K_MAX_Cajas; x++)
+    {
+        lCajas[x] = 0;
+    }
 
     do
     {
         //--Generador de personas
-        lOpers = random(1,K_MAX_Opers);
-        cout << lOpers  << endl;
+        if(lPersonas < K_MAX_Personas)
+        {
+            lPersonas++;
+            lOpers = random(1,K_MAX_Opers);
+            cout << "#Opers: " << lOpers  << ", #Pers: " << lPersonas << endl;
+            //--Ingresar en la cola
+            if (!lCola.isFull())
+            {
+                lCola.push(lOpers);
+            } else { 
+                lRebotes++;
+            }
+        }
 
+        //--Pedir gente y hacer operaciones
+        lCola.repr();
+        lCajaVacia = 0;
+        for(int x = 0; x < K_MAX_Cajas; x++)
+        {   
+            
+            cout << "Caja #" << x << ": " << lCajas[x] << endl;
+            if(lCajas[x] != 0){
+                lCajas[x]--;
+            }
+            else{
+                if(!lCola.isEmpty())
+                {
+                    lCajas[x] = lCola.top();
+                    lCola.pop();
+                } 
+                else
+                {
+                    lCajaVacia++;
+                }
 
-    } while (false);
-    
+            }
+            cout << "," << lCajas[x] << endl;
+        }
+        lCola.repr();
 
+        //--Determinar el fin de la simulación
+        lSalida = 
+            (lPersonas == K_MAX_Personas) &&
+            (lCola.isEmpty()) &&
+            (lCajaVacia == K_MAX_Cajas);
+        //1. No más personas, 2. Que no haya personas en la cola, 3. No personas en caja
+
+        lCiclos++;
+        cout << "------" << lCiclos << "-----" << endl;
+
+    } while (!lSalida);
+
+    cout << "Max Personas: " << K_MAX_Personas << endl;
+    cout << "Max Lugares: " << K_MAX_Lugares << endl;
+    cout << "Max Cajas: " << K_MAX_Cajas << endl;
+    cout << "Max Opers: " << K_MAX_Opers << endl;
+    cout << "Ciclos: " << lCiclos << endl;
+    cout << "Rebotes: " << lRebotes << endl;
 }
+
+
+/*
+Max Personas: 1000
+Max Lugares: 10
+Max Cajas: 2
+Max Opers: 5
+Ciclos: 1017
+Rebotes: 408
+
+Max Personas: 1000
+Max Lugares: 10
+Max Cajas: 3
+Max Opers: 5
+Ciclos: 1011
+Rebotes: 120
+
+Max Personas: 1000
+Max Lugares: 20
+Max Cajas: 4
+Max Opers: 5
+Ciclos: 1003
+Rebotes: 0
+
+
+*/

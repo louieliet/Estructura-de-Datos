@@ -107,7 +107,7 @@ void FiFo<T>::pop(void)
 
     if (aData) {
         if (!isEmpty()) {
-            for(int lIdx = 0; lIdx < aCur; lIdx++)
+            for(int lIdx = 0; lIdx < aMax-1; lIdx++)
             {
                 aData[lIdx] = aData[lIdx+1];
             }
