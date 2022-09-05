@@ -213,8 +213,9 @@ void FiFo<T>::resize(void)
 
 
 #define K_MAX_Personas 1000
-#define K_MAX_Lugares 20
-#define K_MAX_Cajas 4
+#define K_MAX_Lugares 10
+#define K_MAX_Cajas 2
+#define K_MAX_CajaExclusive 1
 #define K_MAX_Opers 6
 
 
@@ -264,12 +265,14 @@ int main()
     FiFo<int> lCola = FiFo<int>(K_MAX_Lugares, 0);
     FiFo<int> lColaExclusive = FiFo<int>(K_MAX_Lugares, 0);
     int lCaja[K_MAX_Cajas];
+    int lCajaEx[K_MAX_CajaExclusive];
     int lPersonas = 0;
     int lCiclos = 0;
     int lRebotes = 0;
     int lOpers = 0;
     bool lSalida = false;
     int lCajaVacia = 0;
+    int lCajaExVacia = 0;
 
     vector<int> distribution;
     distribution = fillDistribution(distribution);
@@ -278,6 +281,11 @@ int main()
     {
         lCaja[x] = 0;
     }
+    for(int x = 0; x < K_MAX_CajaExclusive; x++)
+    {
+        lCajaEx[x] = 0;
+    }
+
 
     do
     {
@@ -294,17 +302,25 @@ int main()
                 if (!lColaExclusive.isFull())
                 {
                     lColaExclusive.push(lOpers);
+
                 } else { 
-                    lCola.push(lOpers);
+                    lRebotes++;
                 }
                 
             }
-            else{
+            if(lOpers != 1){
                 if (!lCola.isFull())
                 {
                     lCola.push(lOpers);
+
                 } else { 
-                    lRebotes++;
+                    if(!lColaExclusive.isFull())
+                    {
+                        lCola.push(lOpers);
+                    }
+                    else{
+                        lRebotes++;
+                    }
                 }
 
             }
@@ -312,53 +328,55 @@ int main()
 
         //--Pedir gente y hacer operaciones
         lCola.repr();
+        lColaExclusive.repr();
         lCajaVacia = 0;
+        lCajaExVacia = 0;
 
-        if(lOpers == 1)
-        {
-            cout << "Caja #0 : " << lCaja[0] << endl;
-            if(lCaja[0] != 0){
-                lCaja[0]--;
+        
+        cout << "Caja #Exc : " << lCajaEx[0] << endl;
+
+        if(lCajaEx[0] != 0){
+            lCajaEx[0]--;
+            }
+        else{
+            if(!lColaExclusive.isEmpty()){
+                lCajaEx[0] = lColaExclusive.top();
+                lColaExclusive.pop();
+            } 
+            else{ lCajaExVacia++;}
+            }
+        cout << "," << lCajaEx[0] << endl;
+        
+
+        for(int x = 0; x < K_MAX_Cajas; x++)
+        {   
+
+            cout << "Caja #" << x << ": " << lCaja[x] << endl;
+            if(lCaja[x] != 0){
+                lCaja[x]--;
             }
             else{
-                if(!lColaExclusive.isEmpty()){
-                    lCaja[0] = lColaExclusive.top();
-                    lColaExclusive.pop();
+                if(!lCola.isEmpty()){
+                    lCaja[x] = lCola.top();
+                    lCola.pop();
                 } 
-                else{ lCajaVacia = K_MAX_Cajas;}
+                else{ lCajaVacia++;}
             }
-            cout << "," << lCaja[0] << endl;
-
+            cout << "," << lCaja[x] << endl;
+           
         }
-        else{
 
-            for(int x = 0; x < K_MAX_Cajas; x++)
-            {   
-    
-                cout << "Caja #" << x << ": " << lCaja[x] << endl;
-                if(lCaja[x] != 0){
-                    lCaja[x]--;
-                }
-                else{
-                    if(!lCola.isEmpty()){
-                        lCaja[x] = lCola.top();
-                        lCola.pop();
-                    } 
-                    else{ lCajaVacia++;}
-                }
-                cout << "," << lCaja[x] << endl;
-               
-            }
-
-        }
+        
 
         lCola.repr();
+        lColaExclusive.repr();
 
         //--Determinar el fin de la simulación
         lSalida = 
             (lPersonas == K_MAX_Personas) &&
             (lCola.isEmpty()) &&
-            (lCajaVacia == K_MAX_Cajas);
+            (lCajaVacia == K_MAX_Cajas) &&
+            (lCajaExVacia == K_MAX_CajaExclusive);
         //1. No más personas, 2. Que no haya personas en la cola, 3. No personas en caja
 
         lCiclos++;
@@ -369,6 +387,7 @@ int main()
     cout << "Max Personas: " << K_MAX_Personas << endl;
     cout << "Max Lugares: " << K_MAX_Lugares << endl;
     cout << "Max Cajas: " << K_MAX_Cajas << endl;
+    cout << "Max Cajas Exlusivas: " << K_MAX_CajaExclusive << endl;
     cout << "Max Opers: " << K_MAX_Opers << endl;
     cout << "Ciclos: " << lCiclos << endl;
     cout << "Rebotes: " << lRebotes << endl;
