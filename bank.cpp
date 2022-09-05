@@ -262,6 +262,7 @@ vector<int> fillDistribution(vector<int> v)
 int main()
 {
     FiFo<int> lCola = FiFo<int>(K_MAX_Lugares, 0);
+    FiFo<int> lColaExclusive = FiFo<int>(K_MAX_Lugares, 0);
     int lCaja[K_MAX_Cajas];
     int lPersonas = 0;
     int lCiclos = 0;
@@ -288,18 +289,30 @@ int main()
             //lOpers = 1;
             cout << "#Opers: " << lOpers  << ", #Pers: " << lPersonas << endl;
             //--Ingresar en la cola
-            if (!lCola.isFull())
+            if(lOpers == 1)
             {
-                lCola.push(lOpers);
-            } else { 
-                lRebotes++;
+                if (!lColaExclusive.isFull())
+                {
+                    lColaExclusive.push(lOpers);
+                } else { 
+                    lCola.push(lOpers);
+                }
+                
+            }
+            else{
+                if (!lCola.isFull())
+                {
+                    lCola.push(lOpers);
+                } else { 
+                    lRebotes++;
+                }
+
             }
         }
 
         //--Pedir gente y hacer operaciones
         lCola.repr();
         lCajaVacia = 0;
-
 
         if(lOpers == 1)
         {
@@ -308,9 +321,9 @@ int main()
                 lCaja[0]--;
             }
             else{
-                if(!lCola.isEmpty()){
-                    lCaja[0] = lCola.top();
-                    lCola.pop();
+                if(!lColaExclusive.isEmpty()){
+                    lCaja[0] = lColaExclusive.top();
+                    lColaExclusive.pop();
                 } 
                 else{ lCajaVacia = K_MAX_Cajas;}
             }
