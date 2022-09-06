@@ -133,8 +133,14 @@ void Dlist::push(string pNombre){
                 push_back(pNombre);
             }
             else{
-                PDNODE lTemp = search(pNombre);
-                //Aqui 
+                PDNODE lItem = search(pNombre);
+                if(lItem){
+                    PDNODE lTemp = getNewNode(pNombre);
+                    lTemp->sNext = lItem;
+                    lTemp->sPrev = lItem->sPrev;
+                    lItem->sPrev->sNext = lTemp;
+                    lItem->sPrev = lTemp;
+                }
             }
     }
 }
@@ -143,9 +149,9 @@ int main()
 {
     Dlist lLista = Dlist();
 
-    lLista.push_front("Peter Parker");
-    lLista.push_back("Clark Kent");
-    lLista.push_front("Diana Prince");
+    lLista.push("C");
+    lLista.push("B");
+    lLista.push("D");
 
     lLista.repr();
 
