@@ -1,0 +1,10 @@
+
+- Realice un clase pila (LiFo) con 
+los métodos estándar push, pop, isEmpty y isFull, 
+de enteros. Cada que se haga un push de en la pila, 
+verificar si el número es primo, y si lo es añadir 1 a 
+un atributo privado de la clase. Haga el método que pueda 
+entregar el valor del número de primos que han entrado en la 
+pila.
+
+- Realice un clase cola (FiFo) con los métodos estándar push, pop, isEmpty y isFull, de reales. Cada vez que se realice un pop de la cola, se debe sumar el valor en un atributo privado que lleva la sumatoria de todos los valores que han salido de la cola. Haga el método que pueda entregar el valor de la sumatoria que han salido en la cola.
