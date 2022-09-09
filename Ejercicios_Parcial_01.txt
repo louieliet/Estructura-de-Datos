@@ -7,4 +7,35 @@ un atributo privado de la clase. Haga el método que pueda
 entregar el valor del número de primos que han entrado en la 
 pila.
 
-- Realice un clase cola (FiFo) con los métodos estándar push, pop, isEmpty y isFull, de reales. Cada vez que se realice un pop de la cola, se debe sumar el valor en un atributo privado que lleva la sumatoria de todos los valores que han salido de la cola. Haga el método que pueda entregar el valor de la sumatoria que han salido en la cola.
+- Realice un clase cola (FiFo) con los métodos estándar 
+push, pop, isEmpty y isFull, de reales. Cada vez que se realice
+un pop de la cola, se debe sumar el valor en un atributo privado
+que lleva la sumatoria de todos los valores que han salido de la
+cola. Haga el método que pueda entregar el valor de la sumatoria 
+que han salido en la cola.
+
+
+.- LiFo_XYZ. Desarrolle un programa con una pila de reales. Realice:
+• Agregue un método que entregue el valor de aMax.
+• Agregue un método llamado GetMaxIdx que busque internamente en los elementos 
+alojados y entregue el índice del elemento más grande de todos.
+• Genere una instancia de esa clase de Pila, llénela con 15 valores aleatorios entre 0 y 1. ( 
+Tip: así se generan números aleatorios entre 0 y 1: (double)rand() / RAND_MAX )
+• Por cada real ingresado, ejecute el descriptor de la pila.
+• Almacene en una variable e imprima lo entregado por el método GetMaxIdx.
+• En otra variable obtenga el valor del elemento más grande (Tip: ¿recuerda get?)
+• Saque todos los valores de la pila y obtenga el promedio.
+• Imprima cuál es su diferencia del mayor con la media.
+8.- FiFo_XYZ. Genere el código de una estructura de tipo FiFo, para enteros. Realice:
+• A los métodos que ya conoce (como isEmpty, isFull, push y pop) agregue dos métodos más: 
+countPrime, y countOdd.
+• La idea es que countPrime entregue el valor del atributo aCountPrime, al cual se le suma
+uno cada vez que se hace un push de un número primo.
+• El método countOdd debe entregar el valor del atributo aCountOdd, al que se le agrega uno 
+cada vez que se realiza un push de un número impar.
+• Advertencia: la capacidad de la cola no tiene que ver con el total de turnos atendidos, pues 
+los números entran y se van, y lo que se desea saber es la naturaleza de los números.
+• Para probar el programa puede generar N números aleatorios y meterlos y sacarlos de la 
+cola, y al final llamar a los métodos countPrime, countOdd y también imprimir el porcentaje 
+de los primos atendidos respecto del total de impares. (Nota: supondremos al 2 como 
+impar).
