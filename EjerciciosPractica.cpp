@@ -28,6 +28,11 @@ public:
     void repr(void);
     int getaMax(void);
     int getIdxMax(void);
+    double getMemory(void){
+        double memory = (double)sizeof(LiFo);
+
+        return memory;
+    };
 
     //Método que entrega el número de números primos
     int pCounter(void);
@@ -500,13 +505,16 @@ int main()
     Cola.pop();
     Cola.pop();
 
+
     cout << "Sumatoria de números popeados: " << Cola.getSumout() << endl;*/
     
     LiFo<double> Pila2(5,0);
 
-    Pila2.push(3);
+    cout << Pila2.getMemory();
+
+    /*Pila2.push(3);
     Pila2.push(5);
     Pila2.push(8);
     Pila2.repr();
-    cout << Pila2.getIdxMax();
+    cout << Pila2.getIdxMax();*/
 }
