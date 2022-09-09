@@ -27,12 +27,20 @@ public:
     T operator [](int pIdx);
     void repr(void);
     int getaMax(void);
-    int getIdxMax(void);
+    int getIdxMin(void);
     double getMemory(void){
-        double memory = (double)sizeof(LiFo);
 
-        return memory;
+        double porcentaje;
+
+        double memorytotal = sizeof(T) * aMax;
+        double usedmemory = sizeof(T) * aCur;
+
+        porcentaje = (usedmemory*100)/memorytotal;
+
+        return porcentaje;
     };
+
+    
 
     //Método que entrega el número de números primos
     int pCounter(void);
@@ -48,26 +56,24 @@ int LiFo<T>::getaMax(void){
 }
 
 template<class T>
-int LiFo<T>::getIdxMax(void){
+int LiFo<T>::getIdxMin(void){
 
-    T mayor = aData[0];
+    T menor = aData[0];
     int Idx;
 
-    for(int x = 0; x < aMax; x++)
+    for(int i = 0; i < pCount; i++)
     {
-        if(aData[x]>mayor)
-            mayor = aData[x];    
+        if(aData[i] < menor){
+            menor = aData[i];
+        }
     }
-
-    for(int x = 0; x < aMax; x++){
-
-        if(aData[x] == mayor){
-            Idx = x;
+    for(int i = 0; i < pCount; i++)
+    {
+        if(menor == aData[i]){
+            Idx = i;
             break;
-        }   
-
+        }
     }
-
     return Idx;
 }
 
@@ -117,6 +123,7 @@ void LiFo<T>::push(T pVal)
 
             aData[aCur] = pVal;
             aCur++;
+            pCount++;
 
             /*if(pVal % 2 != 0){
                 pCount++;
@@ -510,7 +517,16 @@ int main()
     
     LiFo<double> Pila2(5,0);
 
-    cout << Pila2.getMemory();
+
+    Pila2.push(1);
+    Pila2.push(3);
+    Pila2.push(5);
+    Pila2.repr();
+    cout << Pila2.getMemory() << endl;
+
+    cout << Pila2.getIdxMin() << endl;
+    
+
 
     /*Pila2.push(3);
     Pila2.push(5);

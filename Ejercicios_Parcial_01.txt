@@ -39,3 +39,38 @@ los números entran y se van, y lo que se desea saber es la naturaleza de los n�
 cola, y al final llamar a los métodos countPrime, countOdd y también imprimir el porcentaje 
 de los primos atendidos respecto del total de impares. (Nota: supondremos al 2 como 
 impar).
+
+
+
+
+a)	Un método que entregue el porcentaje de utilización de la
+ memoria asignada a la pila.
+b)	Un método que busque dentro de la pila y entregue el 
+índice del elemento más pequeño de todos.
+c)	Con un ejemplar de esa clase de pila, del tamaño entre 
+300 y 650 (el que usted quiera), llénela con valores aleatorios entre 0.3 y 0.65, sin pasar del 65% de ocupación de la pila.
+d)	Muestre el índice del elemento menor dentro de la pila.
+e)	Saque de la pila los elementos necesarios para que tenga 
+una utilización cercana al 30%
+
+
+a)	Agregue a la cola un vector de estadísticas de 
+enteros como atributo privado, tendrá 10 casillas.
+ Lo debe inicializar todo en ceros.
+b)	Genere un método que muestre en pantalla los valores
+ de las 10 casillas del vector de estadísticas.
+c)	Determine el tamaño de la cola entre 400 y 800
+ (el que usted quiera).
+d)	Genere 4000 enteros que meterá en la cola, deben 
+estar en el rango de 0 a 100.
+e)	Si la cola se llena, saque un elemento de la cola 
+para que pueda ingresar uno más.
+f)	Si ya se generaron los 4000 enteros, saque de la 
+cola los enteros que restan.
+g)	Cada que saque a un entero, debe ver si está entre 
+0 y 10, si es así, aumentar en 1 la primera celda del vector de estadísticas. Si está entre 11 y 20, en la segunda, y así sucesivamente.
+h)	Al terminar de sacar todos los enteros de la cola, 
+ejecute el método que muestra los valores del vector de
+ estadísticas del inciso b.
+
+
