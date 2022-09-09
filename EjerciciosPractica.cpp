@@ -248,15 +248,15 @@ public:
     T operator [](int pIdx);
     void repr(void);
 
-    double getSumout(void);
+    T getSumout(void);
 
 private:
     void resize(void);
-    double sumOut = 0;
+    T sumOut = 0;
 };
 
 template <class T>
-double FiFo<T>::getSumout(void){
+T FiFo<T>::getSumout(void){
     return sumOut;
 }
 
