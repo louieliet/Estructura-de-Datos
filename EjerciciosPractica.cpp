@@ -26,6 +26,8 @@ public:
     T get(int pIdx);
     T operator [](int pIdx);
     void repr(void);
+    int getaMax(void);
+    int getIdxMax(void);
 
     //Método que entrega el número de números primos
     int pCounter(void);
@@ -34,6 +36,36 @@ private:
     void resize(void);
     int pCount = 0;
 };
+
+template<class T>
+int LiFo<T>::getaMax(void){
+    return aMax;
+}
+
+template<class T>
+int LiFo<T>::getIdxMax(void){
+
+    T mayor = aData[0];
+    int Idx;
+
+    for(int x = 0; x < aMax; x++)
+    {
+        if(aData[x]>mayor)
+            mayor = aData[x];    
+    }
+
+    for(int x = 0; x < aMax; x++){
+
+        if(aData[x] == mayor){
+            Idx = x;
+            break;
+        }   
+
+    }
+
+
+    return Idx;
+}
 
 template <class T>
 int LiFo<T>::pCounter(void){
@@ -82,9 +114,9 @@ void LiFo<T>::push(T pVal)
             aData[aCur] = pVal;
             aCur++;
 
-            if(pVal % 2 != 0){
+            /*if(pVal % 2 != 0){
                 pCount++;
-            }
+            }*/
 
         }
         else {
@@ -222,7 +254,6 @@ void LiFo<T>::resize(void)
             aErr = -8; // Intento de resize fuera de rango
     }
 } // resize
-
 
 template <class T>
 class FiFo {
@@ -444,12 +475,18 @@ void FiFo<T>::resize(void)
     }
 } // resize
 
+
+
+
+
+
 int main()
 {
-    LiFo<int> Pila(5,0); 
-    FiFo<double> Cola(5,0);
+    /*LiFo<int> Pila(5,0); 
+    FiFo<double> Cola(5,0);*/
 
-    Pila.push(3);
+
+    /*Pila.push(3);
     Pila.push(2);
 
 
@@ -464,8 +501,13 @@ int main()
     Cola.pop();
     Cola.pop();
 
+    cout << "Sumatoria de números popeados: " << Cola.getSumout() << endl;*/
+    
+    LiFo<double> Pila2(5,0);
 
-
-
-    cout << "Sumatoria de números popeados: " << Cola.getSumout() << endl;
+    Pila2.push(3);
+    Pila2.push(5);
+    Pila2.push(8);
+    Pila2.repr();
+    cout << Pila2.getIdxMax();
 }
