@@ -316,7 +316,7 @@ int main()
                 } else { 
                     if(!lColaExclusive.isFull())
                     {
-                        lCola.push(lOpers);
+                        lColaExclusive.push(lOpers);
                     }
                     else{
                         lRebotes++;
@@ -392,29 +392,3 @@ int main()
     cout << "Ciclos: " << lCiclos << endl;
     cout << "Rebotes: " << lRebotes << endl;
 }
-
-
-/*
-Max Personas: 1000
-Max Lugares: 10
-Max Cajas: 2
-Max Opers: 5
-Ciclos: 1017
-Rebotes: 408
-
-Max Personas: 1000
-Max Lugares: 10
-Max Cajas: 3
-Max Opers: 5
-Ciclos: 1011
-Rebotes: 120
-
-Max Personas: 1000
-Max Lugares: 20
-Max Cajas: 4
-Max Opers: 5
-Ciclos: 1003
-Rebotes: 0
-
-
-*/
