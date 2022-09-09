@@ -63,7 +63,6 @@ int LiFo<T>::getIdxMax(void){
 
     }
 
-
     return Idx;
 }
 
