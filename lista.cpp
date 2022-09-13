@@ -19,6 +19,7 @@ class Dlist{
 protected:
     PDNODE aHead;
     PDNODE aTail;
+    PDNODE aCurr;    ;
 
 public:
     Dlist(void);
@@ -35,6 +36,7 @@ public:
 
     PDNODE top_front(void);
     PDNODE top_back(void);
+    PDNODE get(bool pRev = false);
 
     bool isEmpty(void);
 
@@ -172,17 +174,38 @@ PDNODE Dlist::top_back(void)
     return NULL;
 }
 
+PDNODE Dlist::get(bool pRev)
+{
+    PDNODE lTemp = NULL;
+
+    if(aHead){
+
+        if(aCurr == NULL)
+            aCurr = (pRev == false ? aHead : aTail);
+        else
+            aCurr = (pRev == false ? aCurr->sNext : aCurr->sPrev);
+
+        lTemp = aCurr;
+
+    }
+
+    return lTemp;
+}
+
 void Dlist::pop_front()
 {
     if(aHead){
         PDNODE lTemp = aHead->sNext;
+        bool lEqual = (aHead == aCurr);
         delete aHead;
         aHead = lTemp;
         if(aHead == NULL){
             aTail = NULL;
+            aCurr = NULL;
         }
         else{
             aHead->sPrev = NULL;
+            aCurr = (lEqual ? aHead : aCurr);
         }
     }
     
@@ -192,13 +215,16 @@ void Dlist::pop_back()
 {
     if(aHead){
         PDNODE lTemp = aTail->sPrev;
+        bool lEqual = (aTail == aCurr);
         delete aTail;
         aTail = lTemp;
         if(aTail == NULL){
             aHead = NULL;
+            aCurr = NULL;
         }
         else{
             aTail->sNext = NULL;
+            aCurr = (lEqual ? aTail : aCurr);
         }
     }
     
@@ -219,16 +245,7 @@ int main()
     lLista.push("D");
     lLista.push("007");
 
-    lLista.repr(true);
-
-    PDNODE lPtr = lLista.top_front();
-
-    if(lPtr)
-    {
-        cout << "1ero: " << lPtr->sNombre << endl;
-    }
-
-
+    /*
     lLista.pop_front();
     lLista.repr();
 
@@ -239,6 +256,20 @@ int main()
     while(!lLista.isEmpty()){
         lLista.pop_front();
     }
-    
+
     lLista.repr();
+    */
+
+   lLista.repr();
+
+   PDNODE lTemp = NULL;
+
+    while(lTemp = lLista.get()){
+        cout << "Nom: " << lTemp->sNombre << endl;
+    }
+
+    lLista.repr();
+
+
+
 }
