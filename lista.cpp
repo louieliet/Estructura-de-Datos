@@ -27,8 +27,16 @@ public:
     void clean(void); //Liberar de memoria todos los nodos
     void push_front(string pNombre);
     void push_back(string pNombre);
-    void repr(void);
     void push(string pNombre);
+    void repr(bool pRev = false);
+
+    void pop_front(void);
+    void pop_back(void);
+
+    PDNODE top_front(void);
+    PDNODE top_back(void);
+
+    bool isEmpty(void);
 
 private:
     PDNODE getNewNode(string pNombre);
@@ -80,14 +88,14 @@ void Dlist::push_back(string pNombre){
         aTail = lTemp;
     }
 }
-void Dlist::repr(void){
+void Dlist::repr(bool pRev){
     if(aHead){
-        PDNODE lTemp = aHead;
+        PDNODE lTemp = (pRev == false ? aHead : aTail);
         while (lTemp)
         {
             cout << "-> ";
             cout << lTemp->sNombre;
-            lTemp = lTemp->sNext;
+            lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
         }
         cout << "->|| " << endl;
         
@@ -145,6 +153,63 @@ void Dlist::push(string pNombre){
     }
 }
 
+
+PDNODE Dlist::top_front(void)
+{
+    if(aHead)
+    {
+        return aHead;
+    }
+    return NULL;
+}
+
+PDNODE Dlist::top_back(void)
+{
+    if(aHead)
+    {
+        return aTail;
+    }
+    return NULL;
+}
+
+void Dlist::pop_front()
+{
+    if(aHead){
+        PDNODE lTemp = aHead->sNext;
+        delete aHead;
+        aHead = lTemp;
+        if(aHead == NULL){
+            aTail = NULL;
+        }
+        else{
+            aHead->sPrev = NULL;
+        }
+    }
+    
+}
+
+void Dlist::pop_back()
+{
+    if(aHead){
+        PDNODE lTemp = aTail->sPrev;
+        delete aTail;
+        aTail = lTemp;
+        if(aTail == NULL){
+            aHead = NULL;
+        }
+        else{
+            aTail->sNext = NULL;
+        }
+    }
+    
+}
+
+bool Dlist::isEmpty(void)
+{
+    return (aHead == NULL);
+}
+
+
 int main()
 {
     Dlist lLista = Dlist();
@@ -152,7 +217,28 @@ int main()
     lLista.push("C");
     lLista.push("B");
     lLista.push("D");
+    lLista.push("007");
 
+    lLista.repr(true);
+
+    PDNODE lPtr = lLista.top_front();
+
+    if(lPtr)
+    {
+        cout << "1ero: " << lPtr->sNombre << endl;
+    }
+
+
+    lLista.pop_front();
     lLista.repr();
 
+    lLista.pop_back();
+    lLista.repr();
+
+    //Eliminar con pops
+    while(!lLista.isEmpty()){
+        lLista.pop_front();
+    }
+    
+    lLista.repr();
 }
