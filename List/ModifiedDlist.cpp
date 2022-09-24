@@ -9,7 +9,7 @@ using namespace std;
 
 typedef struct DNODE* PDNODE; // aapuntador del tipo DNODE
 //typedef es una palabra reservada que nos permite definir un nuevo tipo
-typedef struct DNODE {
+struct DNODE {
     string sNombre;
     int sFrec; //para frecuencia 
     PDNODE sNext; //apunta a ruta de memoria siguiente
@@ -21,8 +21,9 @@ protected:
     PDNODE aHead; //donde empieza la lista
     PDNODE aTail; //posición donde termina la lista (temporal porque puedes agregar más datos)
     PDNODE aCurr;
+    bool aFreq;
 public:
-    DList(void);
+    DList(bool freq);
     ~DList(void);
 
     void clean(void);
@@ -42,6 +43,7 @@ public:
     void repr(bool pRev = false);
 
     void del(string pNombre);
+    void delall(string pNombre);
 
 private:
     PDNODE getNewNode(string pNombre);
@@ -49,11 +51,13 @@ private:
     PDNODE find(string pNombre);
 };
 
-DList::DList(void) {
+DList::DList(bool freq) {
 
     aHead = NULL;
     aTail = NULL;
     aCurr = NULL;
+    aFreq = freq;
+    
 
 } //constructor
 
@@ -96,19 +100,29 @@ void DList::clean(void) {
 
 void DList::pop_front(void) {
     if (aHead) {
-        PDNODE lTemp = aHead->sNext;
 
-        bool lEqual = (aHead == aCurr);
-        delete aHead;
-        aHead = lTemp;
-
-        if (aHead == NULL) {
-            aTail = NULL;
-            aCurr = NULL;
+        if(aFreq == true && aHead->sFrec > 1)
+        {
+            aHead->sFrec--;
         }
-        else {
-            aHead->sPrev = NULL;
-            aCurr = (lEqual ? aHead: aCurr);
+        else
+        {
+            PDNODE lTemp = aHead->sNext;
+
+            bool lEqual = (aHead == aCurr);
+            delete aHead;
+            aHead = lTemp;
+
+            if (aHead == NULL) {
+                aTail = NULL;
+                aCurr = NULL;
+            }
+            else {
+
+                aHead->sPrev = NULL;
+                aCurr = (lEqual ? aHead: aCurr);
+
+            }
         }
     }
 
@@ -116,20 +130,27 @@ void DList::pop_front(void) {
 void DList::pop_back(void) {
 
     if (aHead) {
-        PDNODE lTemp = aTail->sPrev;
-        bool lEqual = (aTail == aCurr);
-        delete aTail;
-        aTail = lTemp;
-        if (aTail == NULL) {
-            aHead = NULL;
-            aCurr = NULL;
+
+        if(aFreq == true && aTail->sFrec > 1)
+        {
+            aTail->sFrec--;
         }
-        else {
-            aTail->sNext = NULL;
-            aCurr = (lEqual ? aTail : aCurr);
+        else{
+            PDNODE lTemp = aTail->sPrev;
+            bool lEqual = (aTail == aCurr);
+            delete aTail;
+            aTail = lTemp;
+            if (aTail == NULL) {
+                aHead = NULL;
+                aCurr = NULL;
+            }
+            else {
+
+                aTail->sNext = NULL;
+                aCurr = (lEqual ? aTail : aCurr);
+            }
         }
     }
-
 } //borrar el último lugat en la lista
 
 void DList::push_front(string pNombre) {
@@ -138,7 +159,7 @@ void DList::push_front(string pNombre) {
         aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
     }
     else {
-        if(pNombre == aHead->sNombre){
+        if(aFreq == true && pNombre == aHead->sNombre){
             aHead->sFrec++;
         }
         else{
@@ -157,7 +178,7 @@ void DList::push_back(string pNombre) {
         aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
     }
     else {
-        if(pNombre == aTail->sNombre){
+        if(aFreq == true && pNombre == aTail->sNombre){
             aTail->sFrec++;
         }
         else{
@@ -237,13 +258,13 @@ void DList::push(string pNombre) {
             else
             {
                 PDNODE lEqual = find(pNombre);
-                if(lEqual){
 
+                if(aFreq == true && lEqual)
+                {
                     lEqual->sFrec++;
-
                 }
-
-                else{
+                else
+                {
 
                     PDNODE lItem = search(pNombre); //encuentra el lugar disponible o busca un lugar donde guardarlo.
                     if (lItem) {
@@ -254,10 +275,8 @@ void DList::push(string pNombre) {
                         lItem->sPrev->sNext = lTemp;
                         lItem->sPrev = lTemp;
 
-                        
                     }
                 }
-                
             }
         }
     }
@@ -283,13 +302,27 @@ bool DList::isEmpty(void) {
 void DList::repr(bool pRev) { //si pRev es falso, recorre en orden, si es cierto, recorre la lista inversamente (de aTail a aHead)
 
     if (aHead) {
-        PDNODE lTemp = (pRev== false ? aHead : aTail); 
-        while (lTemp) {
-            cout << "->" << lTemp->sNombre;
-            cout << " (with f: " << lTemp->sFrec << ")";
-            lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+
+        if(aFreq == true)
+        {
+            PDNODE lTemp = (pRev== false ? aHead : aTail); 
+            while (lTemp) {
+                cout << "->" << lTemp->sNombre;
+                cout << " (with f: " << lTemp->sFrec << ")";
+                lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+            }
+            cout << "-> ||" << endl;
         }
-        cout << "-> ||" << endl;
+        else
+        {
+            PDNODE lTemp = (pRev== false ? aHead : aTail); 
+            while (lTemp) {
+                cout << "->" << lTemp->sNombre;
+                lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+            }
+            cout << "-> ||" << endl;
+
+        }
     }
 
 } //repr inverso (recorre de la Tail)
@@ -319,9 +352,67 @@ void DList::del(string pNombre){
     else{
 
         PDNODE lTemp = find(pNombre);
+        if(aFreq == true && lTemp->sFrec > 1){
+            lTemp->sFrec--;
+        }
+        else{
+            lTemp->sNext->sPrev = lTemp->sPrev;
+            lTemp->sPrev->sNext = lTemp->sNext;
+        }
+        
+        delete lTemp;
+    }
+
+}
+
+void DList::delall(string pNombre){
+
+    if(pNombre == aHead->sNombre){
+        
+        if (aHead) {
+
+            PDNODE lTemp = aHead->sNext;
+
+            bool lEqual = (aHead == aCurr);
+            delete aHead;
+            aHead = lTemp;
+
+            if (aHead == NULL) {
+                aTail = NULL;
+                aCurr = NULL;
+            }
+            else {
+
+                aHead->sPrev = NULL;
+                aCurr = (lEqual ? aHead: aCurr);
+            }
+        }
+    }
+    else if(pNombre == aTail->sNombre){
+        if(aHead)
+        {
+            PDNODE lTemp = aTail->sPrev;
+            bool lEqual = (aTail == aCurr);
+            delete aTail;
+            aTail = lTemp;
+            if (aTail == NULL) {
+                aHead = NULL;
+                aCurr = NULL;
+            }
+            else {
+
+                aTail->sNext = NULL;
+                aCurr = (lEqual ? aTail : aCurr);
+            }
+        }
+    }
+    else{
+
+        PDNODE lTemp = find(pNombre);
+
         lTemp->sNext->sPrev = lTemp->sPrev;
         lTemp->sPrev->sNext = lTemp->sNext;
-
+        
         delete lTemp;
     }
 
@@ -329,15 +420,16 @@ void DList::del(string pNombre){
 
 int main()
 {
-    DList lLista = DList();
+    DList lLista = DList(true);
 
-    lLista.push("Peter Parker");
-    lLista.push("Peter Adams");
-    lLista.push("Peter Zi");
-    lLista.push("Clark Kent");
-    lLista.push("Diana Prince");
-    lLista.push("alice");
     lLista.push("007");
+    lLista.push("007");
+    lLista.push("Amanda");
+    lLista.push("Amanda");
+    lLista.repr();
+    lLista.del("Amanda");
+    lLista.delall("007");
+    lLista.repr();
 
     /*PDNODE lPtr = lLista.top_front();
     if (lPtr) {
@@ -361,11 +453,6 @@ int main()
     while (lTemp = lLista.get(true)) {
         cout << "Nombre: " << lTemp -> sNombre << endl;
     }*/
-
-
-    lLista.push("007");
-    lLista.repr();
-
 
 }
 
