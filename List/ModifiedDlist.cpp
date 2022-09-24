@@ -21,8 +21,9 @@ protected:
     PDNODE aHead; //donde empieza la lista
     PDNODE aTail; //posición donde termina la lista (temporal porque puedes agregar más datos)
     PDNODE aCurr;
+    bool aFreq = false;
 public:
-    DList(void);
+    DList(bool freq);
     ~DList(void);
 
     void clean(void);
@@ -49,11 +50,13 @@ private:
     PDNODE find(string pNombre);
 };
 
-DList::DList(void) {
+DList::DList(bool freq) {
 
     aHead = NULL;
     aTail = NULL;
     aCurr = NULL;
+    aFreq = freq;
+    
 
 } //constructor
 
@@ -107,8 +110,17 @@ void DList::pop_front(void) {
             aCurr = NULL;
         }
         else {
-            aHead->sPrev = NULL;
-            aCurr = (lEqual ? aHead: aCurr);
+
+            if(aHead->sFrec > 1)
+            {
+                aHead->sFrec--;
+            }
+            else
+            {
+                aHead->sPrev = NULL;
+                aCurr = (lEqual ? aHead: aCurr);
+            }
+
         }
     }
 
@@ -125,11 +137,16 @@ void DList::pop_back(void) {
             aCurr = NULL;
         }
         else {
-            aTail->sNext = NULL;
-            aCurr = (lEqual ? aTail : aCurr);
+
+            if(aTail->sFrec > 1){
+                aTail->sFrec--;
+            }
+            else{
+                aTail->sNext = NULL;
+                aCurr = (lEqual ? aTail : aCurr);
+            }
         }
     }
-
 } //borrar el último lugat en la lista
 
 void DList::push_front(string pNombre) {
@@ -138,7 +155,7 @@ void DList::push_front(string pNombre) {
         aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
     }
     else {
-        if(pNombre == aHead->sNombre){
+        if(aFreq == true && pNombre == aHead->sNombre){
             aHead->sFrec++;
         }
         else{
@@ -157,7 +174,7 @@ void DList::push_back(string pNombre) {
         aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
     }
     else {
-        if(pNombre == aTail->sNombre){
+        if(aFreq == true && pNombre == aTail->sNombre){
             aTail->sFrec++;
         }
         else{
@@ -237,13 +254,14 @@ void DList::push(string pNombre) {
             else
             {
                 PDNODE lEqual = find(pNombre);
-                if(lEqual){
 
+                if(aFreq == true && lEqual)
+                {
                     lEqual->sFrec++;
-
                 }
 
-                else{
+                else
+                {
 
                     PDNODE lItem = search(pNombre); //encuentra el lugar disponible o busca un lugar donde guardarlo.
                     if (lItem) {
@@ -254,10 +272,8 @@ void DList::push(string pNombre) {
                         lItem->sPrev->sNext = lTemp;
                         lItem->sPrev = lTemp;
 
-                        
                     }
                 }
-                
             }
         }
     }
@@ -329,7 +345,7 @@ void DList::del(string pNombre){
 
 int main()
 {
-    DList lLista = DList();
+    DList lLista = DList(true);
 
     lLista.push("Peter Parker");
     lLista.push("Peter Adams");
