@@ -424,10 +424,10 @@ int main()
 
     lLista.push("007");
     lLista.push("007");
-    lLista.push("Alice");
-    lLista.push("Alice");
+    lLista.push("Amanda");
+    lLista.push("Amanda");
     lLista.repr();
-    lLista.del("Alice");
+    lLista.del("Amanda");
     lLista.delall("007");
     lLista.repr();
 
