@@ -299,13 +299,27 @@ bool DList::isEmpty(void) {
 void DList::repr(bool pRev) { //si pRev es falso, recorre en orden, si es cierto, recorre la lista inversamente (de aTail a aHead)
 
     if (aHead) {
-        PDNODE lTemp = (pRev== false ? aHead : aTail); 
-        while (lTemp) {
-            cout << "->" << lTemp->sNombre;
-            cout << " (with f: " << lTemp->sFrec << ")";
-            lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+
+        if(aFreq == true)
+        {
+            PDNODE lTemp = (pRev== false ? aHead : aTail); 
+            while (lTemp) {
+                cout << "->" << lTemp->sNombre;
+                cout << " (with f: " << lTemp->sFrec << ")";
+                lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+            }
+            cout << "-> ||" << endl;
         }
-        cout << "-> ||" << endl;
+        else
+        {
+            PDNODE lTemp = (pRev== false ? aHead : aTail); 
+            while (lTemp) {
+                cout << "->" << lTemp->sNombre;
+                lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+            }
+            cout << "-> ||" << endl;
+
+        }
     }
 
 } //repr inverso (recorre de la Tail)
