@@ -138,13 +138,17 @@ void DList::push_front(string pNombre) {
         aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
     }
     else {
-        PDNODE lTemp = getNewNode(pNombre);
-        lTemp->sNext = aHead;
-        aHead->sPrev = lTemp;
-        aHead = lTemp;
+        if(pNombre == aHead->sNombre){
+            aHead->sFrec++;
+        }
+        else{
 
+            PDNODE lTemp = getNewNode(pNombre);
+            lTemp->sNext = aHead;
+            aHead->sPrev = lTemp;
+            aHead = lTemp;
+        }
     }
-
 }//hace un push antes de la primera  posición
 
 void DList::push_back(string pNombre) {
@@ -153,13 +157,16 @@ void DList::push_back(string pNombre) {
         aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
     }
     else {
-        PDNODE lTemp = getNewNode(pNombre);
-        aTail->sNext = lTemp;
-        lTemp->sPrev = aTail;
-        aTail = lTemp;
-
+        if(pNombre == aTail->sNombre){
+            aTail->sFrec++;
+        }
+        else{
+            PDNODE lTemp = getNewNode(pNombre);
+            aTail->sNext = lTemp;
+            lTemp->sPrev = aTail;
+            aTail = lTemp;
+        }
     }
-
 } //hace un push después de la última posición
 
 PDNODE DList::get(bool pRev) {
@@ -229,17 +236,28 @@ void DList::push(string pNombre) {
             }
             else
             {
-                PDNODE lItem = search(pNombre); //encuentra el lugar disponible o busca un lugar donde guardarlo.
-                if (lItem) {
+                PDNODE lEqual = find(pNombre);
+                if(lEqual){
 
-                    PDNODE lTemp = getNewNode(pNombre); //EL NUEVO DIGITO QUE SE QUIERE AGREGAR
-                    lTemp->sNext = lItem;
-                    lTemp->sPrev = lItem->sPrev;
-                    lItem->sPrev->sNext = lTemp;
-                    lItem->sPrev = lTemp;
+                    lEqual->sFrec++;
 
-                    
                 }
+
+                else{
+
+                    PDNODE lItem = search(pNombre); //encuentra el lugar disponible o busca un lugar donde guardarlo.
+                    if (lItem) {
+
+                        PDNODE lTemp = getNewNode(pNombre); //EL NUEVO DIGITO QUE SE QUIERE AGREGAR
+                        lTemp->sNext = lItem;
+                        lTemp->sPrev = lItem->sPrev;
+                        lItem->sPrev->sNext = lTemp;
+                        lItem->sPrev = lTemp;
+
+                        
+                    }
+                }
+                
             }
         }
     }
@@ -268,6 +286,7 @@ void DList::repr(bool pRev) { //si pRev es falso, recorre en orden, si es cierto
         PDNODE lTemp = (pRev== false ? aHead : aTail); 
         while (lTemp) {
             cout << "->" << lTemp->sNombre;
+            cout << " (with f: " << lTemp->sFrec << ")";
             lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
         }
         cout << "-> ||" << endl;
@@ -343,11 +362,10 @@ int main()
         cout << "Nombre: " << lTemp -> sNombre << endl;
     }*/
 
-    lLista.repr();
-    lLista.del("007");
+
+    lLista.push("007");
     lLista.repr();
 
-    cout << "Cambié de rama :D" << endl;
 
 }
 
