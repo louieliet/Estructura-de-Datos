@@ -41,9 +41,12 @@ public:
     bool isEmpty(void);
     void repr(bool pRev = false);
 
+    void del(string pNombre);
+
 private:
     PDNODE getNewNode(string pNombre);
     PDNODE search(string pNombre);
+    PDNODE find(string pNombre);
 };
 
 DList::DList(void) {
@@ -175,13 +178,29 @@ PDNODE DList::get(bool pRev) {
 
 } //da d
 
-PDNODE DList:: search(string pNombre) { //busca el nombre en la lista
+PDNODE DList::search(string pNombre) { //busca el nombre en la lista
 
     PDNODE lTemp = aHead; 
 
     while (lTemp) {
         if (pNombre <= lTemp->sNombre) { //Verifica que un string sea más pequeño que el otro.
             return lTemp; //si es más pequeño o igual te da un string.
+        }
+
+        lTemp = lTemp->sNext; //accede al siguiente nodo
+    }
+
+    return NULL;
+
+}
+
+PDNODE DList::find(string pNombre) { //busca el nombre en la lista
+
+    PDNODE lTemp = aHead; 
+
+    while (lTemp) {
+        if (pNombre == lTemp->sNombre) { //Verifica que un string sea igual que el otro.
+            return lTemp; //si es igual te da un string.
         }
 
         lTemp = lTemp->sNext; //accede al siguiente nodo
@@ -221,10 +240,7 @@ void DList::push(string pNombre) {
 
                     
                 }
-
-
             }
-
         }
     }
 }//push ordenado
@@ -273,6 +289,25 @@ PDNODE DList::getNewNode(string pNombre) {
 } // Obtener un nuevo nodo
 
 
+void DList::del(string pNombre){
+
+    if(pNombre == aHead->sNombre){
+        pop_front();
+    }
+    else if(pNombre == aTail->sNombre){
+        pop_back();
+    }
+    else{
+
+        PDNODE lTemp = find(pNombre);
+        lTemp->sNext->sPrev = lTemp->sPrev;
+        lTemp->sPrev->sNext = lTemp->sNext;
+
+        delete lTemp;
+    }
+
+}
+
 int main()
 {
     DList lLista = DList();
@@ -285,7 +320,6 @@ int main()
     lLista.push("alice");
     lLista.push("007");
 
-    lLista.repr(false);
     /*PDNODE lPtr = lLista.top_front();
     if (lPtr) {
         cout << "1ero: " << lPtr->sNombre << endl;
@@ -301,15 +335,18 @@ int main()
     }
 
     cout << "------------" << endl;
-    lLista.repr(false); */
+    lLista.repr(false); 
 
 
     PDNODE lTemp = NULL;
     while (lTemp = lLista.get(true)) {
         cout << "Nombre: " << lTemp -> sNombre << endl;
-    }
+    }*/
 
     lLista.repr();
+    lLista.del("007");
+    lLista.repr();
+
 }
 
 
