@@ -347,6 +347,8 @@ int main()
     lLista.del("007");
     lLista.repr();
 
+    cout << "Cambié de rama :D" << endl;
+
 }
 
 
