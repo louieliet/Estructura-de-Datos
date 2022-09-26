@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <chrono>
 
 /*Cada nodo es una estructura*/
 using namespace std;
@@ -425,6 +426,7 @@ void DList::delall(string pNombre){
 
 void DList::read(string pPath, char pMethod)
 {
+    auto lStart = chrono::high_resolution_clock::now();
     string lLine = " ";
     ifstream lFile(pPath);
 
@@ -440,6 +442,10 @@ void DList::read(string pPath, char pMethod)
     }
 
     lFile.close();
+
+    auto lElapsed = chrono::high_resolution_clock::now() - lStart;
+    long long lMS = chrono::duration_cast<std::chrono::microseconds> (lElapsed).count();
+    cout << lMS << "ms" << endl;
 }
 
 void DList::write(string pPath, bool pRev)
