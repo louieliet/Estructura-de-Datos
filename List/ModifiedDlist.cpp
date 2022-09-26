@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
 /*Cada nodo es una estructura*/
@@ -44,6 +45,9 @@ public:
 
     void del(string pNombre);
     void delall(string pNombre);
+
+    void read(string pPath, char pMethod = 'b');
+    void write(string pPath, bool pRev = false);
 
 private:
     PDNODE getNewNode(string pNombre);
@@ -418,18 +422,63 @@ void DList::delall(string pNombre){
 
 }
 
+
+void DList::read(string pPath, char pMethod)
+{
+    string lLine = " ";
+    ifstream lFile(pPath);
+
+    while(getline(lFile, lLine))
+    {
+        switch(pMethod)
+        {
+            case 'b' : push_back(lLine); break;
+            case 'f' : push_front(lLine); break;
+            default:
+                push(lLine); break;
+        }
+    }
+
+    lFile.close();
+}
+
+void DList::write(string pPath, bool pRev)
+{
+    if (aHead) {
+
+        ofstream lFile(pPath);
+
+        if(lFile.is_open()){
+
+            PDNODE lTemp = (pRev== false ? aHead : aTail); 
+            while (lTemp) {
+                lFile << lTemp->sNombre << endl;
+                lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+            }
+            lFile.close();
+        }
+    }
+}
+
 int main()
 {
-    DList lLista = DList(true);
+    DList lLista = DList(false);
 
-    lLista.push("007");
+    lLista.read("C:/Users/juane/OneDrive/Documentos/GitHub/Estructura-de-Datos/List/prueba.txt", 's');
+    lLista.repr();
+    
+    lLista.write("C:/Users/juane/OneDrive/Documentos/GitHub/Estructura-de-Datos/List/prueba_out.txt");
+
+    /*lLista.push("007");
     lLista.push("007");
     lLista.push("Amanda");
     lLista.push("Amanda");
     lLista.repr();
     lLista.del("Amanda");
     lLista.delall("007");
-    lLista.repr();
+    lLista.repr();*/
+
+
 
     /*PDNODE lPtr = lLista.top_front();
     if (lPtr) {
