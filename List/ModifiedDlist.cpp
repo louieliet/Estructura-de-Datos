@@ -432,6 +432,7 @@ void DList::read(string pPath, char pMethod)
 
     while(getline(lFile, lLine))
     {
+
         switch(pMethod)
         {
             case 'b' : push_back(lLine); break;
@@ -458,8 +459,20 @@ void DList::write(string pPath, bool pRev)
 
             PDNODE lTemp = (pRev== false ? aHead : aTail); 
             while (lTemp) {
-                lFile << lTemp->sNombre << endl;
-                lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+                
+                if(aFreq == true)
+                {
+                    for(int i = 0; i < lTemp->sFrec; i++)
+                    {
+                        lFile << lTemp->sNombre << endl;
+                    }
+                    lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+                }
+                else{
+                    lFile << lTemp->sNombre << endl;
+                    lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
+                }
+
             }
             lFile.close();
         }
@@ -468,12 +481,12 @@ void DList::write(string pPath, bool pRev)
 
 int main()
 {
-    DList lLista = DList(false);
+    DList lLista = DList(true);
 
-    lLista.read("C:/Users/juane/OneDrive/Documentos/GitHub/Estructura-de-Datos/List/prueba.txt", 's');
+    lLista.read("C:/Users/Emiliano/Documents/EstructuraDeDatos/Estructura-de-Datos-1/List/prueba.txt", 's');
     lLista.repr();
     
-    lLista.write("C:/Users/juane/OneDrive/Documentos/GitHub/Estructura-de-Datos/List/prueba_out.txt");
+    lLista.write("C:/Users/Emiliano/Documents/EstructuraDeDatos/Estructura-de-Datos-1/List/prueba_out.txt");
 
     /*lLista.push("007");
     lLista.push("007");
