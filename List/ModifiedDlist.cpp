@@ -25,12 +25,12 @@ protected:
     PDNODE aCurr;
     bool aFreq;
 public:
-    DList(bool freq);
+    DList(bool freq = false);
     ~DList(void);
 
     void clean(void);
-    void push_front(string pNombre);
-    void push_back(string pNombre);
+    void push_front(string pNombre, bool pDoFind = true);
+    void push_back(string pNombre, bool pDoFind = true);
     void push(string pNombre);
 
     PDNODE top_front(void);
@@ -44,8 +44,7 @@ public:
     bool isEmpty(void);
     void repr(bool pRev = false);
 
-    void del(string pNombre);
-    void delall(string pNombre);
+    void del(string pNombre, bool pForce);
 
     void read(string pPath, char pMethod = 'b');
     void write(string pPath, bool pRev = false);
@@ -93,13 +92,11 @@ void DList::clean(void) {
     {
         PDNODE lTemp = aHead->sNext;
         delete aHead;
-
         aHead = lTemp; //guarda la direccion de memoria de la siguiente ruta
-
     }
-
     aHead = NULL;
     aTail = NULL;
+    aCurr = NULL;
 
 }//limpia
 
@@ -158,16 +155,35 @@ void DList::pop_back(void) {
     }
 } //borrar el último lugat en la lista
 
-void DList::push_front(string pNombre) {
+void DList::push_front(string pNombre, bool pDoFind) {
     if (aHead == NULL) {
         aHead = getNewNode(pNombre);
         aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
     }
     else {
-        if(aFreq == true && pNombre == aHead->sNombre){
-            aHead->sFrec++;
+        bool lDo = true;
+
+        if(aFreq)
+        {
+            if(pNombre == aHead->sNombre){
+                aHead->sFrec++;
+                lDo = false;
+            }
         }
+        /*if(aFreq == true && pNombre == aHead->sNombre){
+            aHead->sFrec++;
+        }*/
         else{
+            if(pDoFind){
+                PDNODE lItem = find(pNombre);
+                if(lItem != NULL)
+                {
+                    lItem->sFrec++;
+                    lDo = false;
+                }
+            }
+        }
+        if(lDo){
 
             PDNODE lTemp = getNewNode(pNombre);
             lTemp->sNext = aHead;
@@ -177,7 +193,7 @@ void DList::push_front(string pNombre) {
     }
 }//hace un push antes de la primera  posición
 
-void DList::push_back(string pNombre) {
+void DList::push_back(string pNombre, bool pDoFind) {
     if (aHead == NULL) {
         aHead = getNewNode(pNombre);
         aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
@@ -251,54 +267,39 @@ void DList::push(string pNombre) {
 
     }
     else {
-        if (pNombre <= aHead->sNombre) { //ingresa un nombre menor al nombre en el head, entonces lo meterá antes
+        if (pNombre < aHead->sNombre) { //ingresa un nombre menor al nombre en el head, entonces lo meterá antes
+            push_front(pNombre,false);
+        }
+        else if (pNombre == aHead->sNombre) { //ingresa un nombre menor al nombre en el head, entonces lo meterá antes
             push_front(pNombre);
+        }
+        else if (pNombre > aTail->sNombre){
+            push_back(pNombre, false);
+        }
+        else if (pNombre == aTail->sNombre){
+            push_back(pNombre);
         }
         else {
 
-            if (pNombre >= aTail->sNombre) { //ingresa un nombre mayor al nombre en la cola, entonces lo meterá después
-                push_back(pNombre);
+            PDNODE lItem = search(pNombre);
 
-            }
-            else
-            {
-                PDNODE lEqual = find(pNombre);
-
-                if(aFreq == true && lEqual)
-                {
-                    lEqual->sFrec++;
+            if(lItem){
+                if(aFreq == true && lItem->sNombre == pNombre){
+                    lItem->sFrec++;
                 }
-                else
-                {
+                else{
 
-                    PDNODE lItem = search(pNombre); //encuentra el lugar disponible o busca un lugar donde guardarlo.
-                    if (lItem) {
+                    PDNODE lTemp = getNewNode(pNombre); //EL NUEVO DIGITO QUE SE QUIERE AGREGAR
+                    lTemp->sNext = lItem;
+                    lTemp->sPrev = lItem->sPrev;
+                    lItem->sPrev->sNext = lTemp;
+                    lItem->sPrev = lTemp;
 
-                        PDNODE lTemp = getNewNode(pNombre); //EL NUEVO DIGITO QUE SE QUIERE AGREGAR
-                        lTemp->sNext = lItem;
-                        lTemp->sPrev = lItem->sPrev;
-                        lItem->sPrev->sNext = lTemp;
-                        lItem->sPrev = lTemp;
-
-                    }
                 }
             }
         }
     }
 }//push ordenado
-
-/*void DList::repr(void) {
-
-    if (aHead) {
-        PDNODE lTemp = aHead;
-        while (lTemp) {
-            cout << "->"<<lTemp->sNombre;
-            lTemp = lTemp->sNext;
-        }
-        cout << "-> ||" << endl;
-    }
-
-} //repr*/
 
 bool DList::isEmpty(void) {
     return (aHead == NULL);
@@ -308,6 +309,7 @@ void DList::repr(bool pRev) { //si pRev es falso, recorre en orden, si es cierto
 
     if (aHead) {
 
+    
         if(aFreq == true)
         {
             PDNODE lTemp = (pRev== false ? aHead : aTail); 
@@ -346,7 +348,7 @@ PDNODE DList::getNewNode(string pNombre) {
 } // Obtener un nuevo nodo
 
 
-void DList::del(string pNombre){
+void DList::del(string pNombre, bool pForce){
 
     if(pNombre == aHead->sNombre){
         pop_front();
@@ -357,72 +359,28 @@ void DList::del(string pNombre){
     else{
 
         PDNODE lTemp = find(pNombre);
-        if(aFreq == true && lTemp->sFrec > 1){
-            lTemp->sFrec--;
-        }
-        else{
+
+        if(lTemp){
+            if(!aFreq)
+                lTemp->sFrec = 0;
+            else
+                if(!pForce)
+                    lTemp->sFrec--;
+                else
+                    lTemp->sFrec = 0;
+
+            if (lTemp->sFrec == 0){
+                if(aCurr == lTemp)
+                    aCurr = lTemp->sNext;
             lTemp->sNext->sPrev = lTemp->sPrev;
             lTemp->sPrev->sNext = lTemp->sNext;
+                
+            }
         }
-        
         delete lTemp;
     }
 
 }
-
-void DList::delall(string pNombre){
-
-    if(pNombre == aHead->sNombre){
-        
-        if (aHead) {
-
-            PDNODE lTemp = aHead->sNext;
-
-            bool lEqual = (aHead == aCurr);
-            delete aHead;
-            aHead = lTemp;
-
-            if (aHead == NULL) {
-                aTail = NULL;
-                aCurr = NULL;
-            }
-            else {
-
-                aHead->sPrev = NULL;
-                aCurr = (lEqual ? aHead: aCurr);
-            }
-        }
-    }
-    else if(pNombre == aTail->sNombre){
-        if(aHead)
-        {
-            PDNODE lTemp = aTail->sPrev;
-            bool lEqual = (aTail == aCurr);
-            delete aTail;
-            aTail = lTemp;
-            if (aTail == NULL) {
-                aHead = NULL;
-                aCurr = NULL;
-            }
-            else {
-
-                aTail->sNext = NULL;
-                aCurr = (lEqual ? aTail : aCurr);
-            }
-        }
-    }
-    else{
-
-        PDNODE lTemp = find(pNombre);
-
-        lTemp->sNext->sPrev = lTemp->sPrev;
-        lTemp->sPrev->sNext = lTemp->sNext;
-        
-        delete lTemp;
-    }
-
-}
-
 
 void DList::read(string pPath, char pMethod)
 {
