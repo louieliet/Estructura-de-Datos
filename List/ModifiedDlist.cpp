@@ -196,13 +196,17 @@ void DList::push_front(string pNombre, bool pDoFind) {
 void DList::push_back(string pNombre, bool pDoFind) {
     if (aHead == NULL) {
         aHead = getNewNode(pNombre);
-        aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
+        aTail = aHead;
     }
     else {
-        if(aFreq == true && pNombre == aTail->sNombre){
-            aTail->sFrec++;
+        bool lDo = true;
+        if (aFreq) {
+            if (pNombre == aTail->sNombre) {
+                (aTail->sFrec)++;
+                lDo = false;
+            }
         }
-        else{
+        if (lDo) {
             PDNODE lTemp = getNewNode(pNombre);
             aTail->sNext = lTemp;
             lTemp->sPrev = aTail;
@@ -441,21 +445,13 @@ int main()
 {
     DList lLista = DList(true);
 
-    lLista.read("C:/Users/Emiliano/Documents/EstructuraDeDatos/Estructura-de-Datos-1/List/prueba.txt", 's');
+    lLista.push("A");
+    lLista.push_back("C");
+    lLista.repr();
+    /*lLista.read("C:/Users/Emiliano/Documents/EstructuraDeDatos/Estructura-de-Datos-1/List/prueba.txt", 's');
     lLista.repr();
     
     lLista.write("C:/Users/Emiliano/Documents/EstructuraDeDatos/Estructura-de-Datos-1/List/prueba_out.txt");
-
-    /*lLista.push("007");
-    lLista.push("007");
-    lLista.push("Amanda");
-    lLista.push("Amanda");
-    lLista.repr();
-    lLista.del("Amanda");
-    lLista.delall("007");
-    lLista.repr();*/
-
-
 
     /*PDNODE lPtr = lLista.top_front();
     if (lPtr) {
