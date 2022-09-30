@@ -1,15 +1,11 @@
-
 #pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <chrono>
 
-
 using namespace std;
-
 typedef struct DNODE* PDNODE; 
-
 typedef struct DATA* PDATA;
 
 struct DATA {
@@ -26,6 +22,8 @@ struct DNODE {
     PDNODE sPrev; 
 };
 
+enum ECampos{nombre,apellido,fnac,salario};
+
 class DList {
 protected:
     PDNODE aHead; 
@@ -37,28 +35,18 @@ public:
     ~DList(void);
 
     void clean(void);
-    void push_front(string pNombre, bool pDoFind = true);
-    void push_back(string pNombre, bool pDoFind = true);
-    void push(string pNombre);
 
-    PDNODE top_front(void);
-    PDNODE top_back(void);
-    PDNODE get(bool pRev = false);
+    void push_back(string pNombre, string pApellido, 
+            string pFNac, double pSalario);
 
-    void pop_front(void);
-    void pop_back(void);
-    // void repr(void);
+    PDATA get(ECampos pCampo, bool pRev = false);
 
     bool isEmpty(void);
-    void repr(bool pRev = false);
 
-    void del(string pNombre, bool pForce);
-
-    void read(string pPath, char pMethod = 'b');
-    void write(string pPath, bool pRev = false);
+    void repr(ECampos pCampo, bool pRev = false);
 
 private:
-    PDNODE getNewNode(string pNombre);
-    PDNODE search(string pNombre);
-    PDNODE find(string pNombre);
+    PDNODE getNewNode(string pNombre, string pApellido, 
+            string pFNac, double pSalario);
+
 };
