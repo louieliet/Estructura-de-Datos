@@ -250,12 +250,11 @@ bool DList::isEmpty(void) { return (aHead == NULL); }
 void DList::repr(ECampos pCampo, bool pRev) { 
 
     if (aHead) {
-
         switch(pCampo){
-        case ECampos::nombre : aINom->repr(pRev); break;
-        case ECampos::apellido : aIApe->repr(pRev); break;
-        case ECampos::fnac : aIFNa->repr(pRev); break;
-        case ECampos::salario : aISal->repr(pRev); break;
+            case ECampos::nombre : aINom->repr(pRev); break;
+            case ECampos::apellido : aIApe->repr(pRev); break;
+            case ECampos::fnac : aIFNa->repr(pRev); break;
+            case ECampos::salario : aISal->repr(pRev); break;
         }
     }
 }

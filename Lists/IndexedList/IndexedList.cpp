@@ -19,7 +19,7 @@ int main(){
 
     PDATA lItem = NULL;
     while(lItem = lLista.get(ECampos::apellido, true)){
-        cout << "\t" << lItem->sNombre << " " << lItem->sApellido << endl;
+        cout << "" << lItem->sNombre << " " << lItem->sApellido << endl;
     }
     
 }
