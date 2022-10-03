@@ -24,12 +24,53 @@ struct DNODE {
 
 enum ECampos{nombre,apellido,fnac,salario};
 
+
+class DLIndex {
+protected:
+    PDNODE aHead; 
+    PDNODE aTail; 
+    PDNODE aCurr;
+    bool aFreq;
+    ECampos aType;
+public:
+    DLIndex(ECampos pType, bool freq = false);
+    ~DLIndex(void);
+
+    void clean(void);
+
+    void push_front(PDATA pData);
+    
+    void push_back(PDATA pData);
+    
+    void push(PDATA pData);
+    
+    PDATA get(bool pRev = false);
+
+    bool isEmpty(void);
+
+    void repr(bool pRev = false);
+
+    PDNODE search(PDATA pData);
+
+private:
+    int comp(PDATA pA, PDATA pB);
+    PDNODE getNewNode(PDATA pData);
+
+};
+
+
 class DList {
 protected:
     PDNODE aHead; 
     PDNODE aTail; 
     PDNODE aCurr;
     bool aFreq;
+
+    DLIndex *aINom;
+    DLIndex *aIApe;
+    DLIndex *aIFNa;
+    DLIndex *aISal;
+
 public:
     DList(bool freq = false);
     ~DList(void);

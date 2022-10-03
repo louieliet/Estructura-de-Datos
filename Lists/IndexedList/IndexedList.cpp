@@ -9,7 +9,18 @@ int main(){
     lLista.push_back("Neils","Bohr","1885-10-07",100);
     lLista.push_back("Hipatia","De Alejandria","455-01-01",100);
 
-    lLista.repr(nombre);
+    lLista.repr(ECampos::nombre);
+
+    cout << endl;
+
+    lLista.repr(ECampos::salario);
+
+    cout << endl;
+
+    PDATA lItem = NULL;
+    while(lItem = lLista.get(ECampos::apellido, true)){
+        cout << "\t" << lItem->sNombre << " " << lItem->sApellido << endl;
+    }
     
 }
 
