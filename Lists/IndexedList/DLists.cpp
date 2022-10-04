@@ -207,34 +207,29 @@ PDATA DLIndex::get(bool pRev)
     }
 } // pop_back*/
 
-/*void DLIndex::del(string pNombre, bool pForce)
+void DLIndex::del(string pNombre, string pApellido, string pFNac, string pSalario)
 {
     if (aHead) {
-        if (aHead->sNombre == pNombre)
-            pop_front();
-        else if (aTail->sNombre == pNombre)
-            pop_back();
-        else {
-            PDNODE lTemp = find(pNombre);
-            if (lTemp) {
-                if (!aFrec)
-                    lTemp->sFrec = 0;
+
+        PDATA lTemp = get(pNombre);
+        if (lTemp) {
+            if (!aFrec)
+                lTemp->sFrec = 0;
+            else
+                if (!pForce)
+                    (lTemp->sFrec)--;
                 else
-                    if (!pForce)
-                        (lTemp->sFrec)--;
-                    else
-                        lTemp->sFrec = 0;
-                if (lTemp->sFrec == 0) {
-                    if (aCurr == lTemp)
-                        aCurr = lTemp->sNext;
-                    lTemp->sPrev->sNext = lTemp->sNext;
-                    lTemp->sNext->sPrev = lTemp->sPrev;
-                    delete lTemp;
-                }
+                    lTemp->sFrec = 0;
+            if (lTemp->sFrec == 0) {
+                if (aCurr == lTemp)
+                    aCurr = lTemp->sNext;
+                lTemp->sPrev->sNext = lTemp->sNext;
+                lTemp->sNext->sPrev = lTemp->sPrev;
+                delete lTemp;
             }
         }
     }
-} // del*/
+} // del
 
 bool DLIndex::isEmpty(void)
 {

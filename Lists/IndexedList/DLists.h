@@ -55,7 +55,7 @@ public:
 
     //void pop_front(void);
     //void pop_back(void);
-    //void del(string pNombre, bool pForce = false);
+    void del(string pNombre, string pApellido, string pFNac, string pSalario);
 
     bool isEmpty(void);
     void repr(bool pRev = false);
