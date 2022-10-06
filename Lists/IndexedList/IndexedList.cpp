@@ -12,15 +12,19 @@ int main(){
     lLista.repr(ECampos::nombre);
 
     cout << endl;
+    
+    lLista.del("Albert");
 
-    lLista.repr(ECampos::salario);
+    lLista.repr(ECampos::nombre);
+
+    /*lLista.repr(ECampos::salario);
 
     cout << endl;
 
     PDATA lItem = NULL;
     while(lItem = lLista.get(ECampos::apellido, true)){
         cout << "" << lItem->sNombre << " " << lItem->sApellido << endl;
-    }
+    }*/
     
 }
 

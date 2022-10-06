@@ -117,21 +117,54 @@ void DLIndex::push(PDATA pData)
     }
 } // push
 
-/*PDNODE DLIndex::top_front(void)
+void DLIndex::pop_front(void) //borrar la direccion de memoria de aHead
 {
     if (aHead) {
-        return aHead;
+        PDNODE lTemp = aHead->sNext;
+        bool lEqual = (aHead == aCurr);
+        delete aHead;
+        aHead = lTemp;
+        if (aHead) {
+            aHead->sPrev = NULL;
+            aCurr = (lEqual ? aHead : aCurr);
+        }
+        else {
+            aTail = NULL;
+            aCurr = NULL;
+        }
     }
-    return NULL;
-} // top_front*/
+    else {
+        return;
+    }
+} // pop_front
 
-/*PDNODE DLIndex::top_back(void)
+void DLIndex::pop_back(void) // borra la ultima dirección de memoria, actúa parecido que el pop_front
 {
+    bool lDo = true;
+
     if (aHead) {
-        return aTail;
+
+        PDNODE lTemp = aTail->sPrev;
+        bool lEqual = (aTail == aCurr);
+        delete aTail;
+        aTail = lTemp;
+        if (aTail) { //solo que aquí cambia el sNext porque si es la ultima posición, debe ser nulo su next
+            aTail->sNext = NULL;
+            aCurr = (lEqual ? aTail : aCurr);
+        }
+        else {
+            aHead = NULL;
+            aCurr = NULL;
+        }
+
+
     }
-    return NULL;
-} // top_back*/
+    else {
+        return;
+    }
+
+} // pop_back
+
 
 PDATA DLIndex::get(bool pRev)
 {
@@ -149,78 +182,29 @@ PDATA DLIndex::get(bool pRev)
     return lTemp;
 } // get
 
-/*void DLIndex::pop_front(void)
+PDNODE DLIndex::find(PDATA pData) // solo busca que sea igual a un nombre en una dirección de memoria, si no, regresa NULL
 {
-    bool lDo = true;
+    PDNODE lTemp = aHead;
 
-    if (aHead) {
-        if (aFrec) {
-            (aHead->sFrec)--;
-            if (aHead->sFrec > 0)
-                lDo = false;
-        }
+    while (lTemp) {
+        if (comp(pData, lTemp->sData) == 0)
+            return lTemp;
+        lTemp = lTemp->sNext;
     }
-    else
-        lDo = false;
-    if (lDo) {
-        PDNODE lTemp = aHead->sNext;
-        bool lEqual = (aHead == aCurr);
-        delete aHead;
-        aHead = lTemp;
-        if (aHead) {
-            aHead->sPrev = NULL;
-            aCurr = (lEqual ? aHead : aCurr);
-        }
-        else {
-            aTail = NULL;
-            aCurr = NULL;
-        }
-    }
-} // pop_front*/
 
-/*void DLIndex::pop_back(void)
+    return NULL;
+} // find 
+
+void DLIndex::del(PDATA pData) //borra un elemento cualquiera de la lista
 {
-    bool lDo = true;
-
-    if (aHead) {
-        if (aFrec) {
-            (aTail->sFrec)--;
-            if (aTail->sFrec > 0)
-                lDo = false;
-        }
-    }
-    else
-        lDo = false;
-    if (lDo) {
-        PDNODE lTemp = aTail->sPrev;
-        bool lEqual = (aTail == aCurr);
-        delete aTail;
-        aTail = lTemp;
-        if (aTail) {
-            aTail->sNext = NULL;
-            aCurr = (lEqual ? aTail : aCurr);
-        }
-        else {
-            aHead = NULL;
-            aCurr = NULL;
-        }
-    }
-} // pop_back*/
-
-void DLIndex::del(string pNombre, string pApellido, string pFNac, string pSalario)
-{
-    if (aHead) {
-
-        PDATA lTemp = get(pNombre);
-        if (lTemp) {
-            if (!aFrec)
-                lTemp->sFrec = 0;
-            else
-                if (!pForce)
-                    (lTemp->sFrec)--;
-                else
-                    lTemp->sFrec = 0;
-            if (lTemp->sFrec == 0) {
+    if (aHead) { //verifica que la lista exista
+        if (aHead->sData->sNombre == pData->sNombre) //si el string que se quiere borrar es igual al nombre guardado en aHead, hace un pop_front
+            pop_front();
+        else if (aTail->sData->sNombre == pData->sNombre) //si el string que se quiere borrar es igual al nombre guardado en aTail, hace un pop_back
+            pop_back();
+        else { //si no está ni en aHead ni aTail
+            PDNODE lTemp = find(pData); //busca dónde está el nombre
+            if (lTemp) { //si existe esa direccion de memoria
                 if (aCurr == lTemp)
                     aCurr = lTemp->sNext;
                 lTemp->sPrev->sNext = lTemp->sNext;
@@ -229,7 +213,7 @@ void DLIndex::del(string pNombre, string pApellido, string pFNac, string pSalari
             }
         }
     }
-} // del
+}
 
 bool DLIndex::isEmpty(void)
 {
@@ -253,49 +237,6 @@ void DLIndex::repr(bool pRev)
         cout << " ->|| " << endl;
     }
 } // repr
-
-/*void DLIndex::read(string pPath, char pMethod)
-{
-    auto lStart = chrono::high_resolution_clock::now();
-    string lLine = "";
-    ifstream lFile(pPath);
-
-    while (getline(lFile, lLine)) {
-        switch (pMethod) {
-        case 'b':
-            push_back(lLine);
-            break;
-        case 'f':
-            push_front(lLine);
-            break;
-        default:
-            push(lLine);
-            break;
-        }
-    }
-
-    lFile.close();
-
-    auto lElapsed = chrono::high_resolution_clock::now() - lStart;
-    long long lMS = chrono::duration_cast<chrono::microseconds>
-        (lElapsed).count();
-    cout << lMS << " ms" << endl;
-} // read*/
-
-/*void DLIndex::write(string pPath, bool pRev)
-{
-    if (aHead) {
-        ofstream lFile(pPath);
-        if (lFile.is_open()) {
-            PDNODE lTemp = (pRev == false ? aHead : aTail);
-            while (lTemp) {
-                lFile << lTemp->sNombre << endl;
-                lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
-            }
-            lFile.close();
-        }
-    }
-} // write*/
 
 int DLIndex::comp(PDATA pA, PDATA pB)
 {
@@ -325,20 +266,7 @@ int DLIndex::comp(PDATA pA, PDATA pB)
     }
 
     return lRes;
-} // comp
-
-/*PDNODE DLIndex::find(string pNombre)
-{
-    PDNODE lTemp = aHead;
-
-    while (lTemp) {
-        if (pNombre == lTemp->sNombre)
-            return lTemp;
-        lTemp = lTemp->sNext;
-    }
-
-    return NULL;
-} // find*/
+}
 
 PDNODE DLIndex::search(PDATA pData)
 {
@@ -393,7 +321,6 @@ DList::~DList(void)
     if (aIFNa) delete aIFNa;
     if (aISal) delete aISal;
 
-    // cout << "Bye!" << endl;
 } // Destructor
 
 void DList::clean(void)
@@ -410,36 +337,6 @@ void DList::clean(void)
     aTail = NULL;
     aCurr = NULL;
 } // clean
-
-/*void DList::push_front(string pNombre)
-{
-    if (aHead == NULL) {
-        aHead = getNewNode(pNombre);
-        aTail = aHead;
-    }
-    else {
-        bool lDo = true;
-        if (aFrec) {
-            if (pNombre == aHead->sNombre) {
-                (aHead->sFrec)++;
-                lDo = false;
-            }
-            else {
-                PDNODE lItem = find(pNombre);
-                if (lItem != NULL) {
-                    (lItem->sFrec)++;
-                    lDo = false;
-                }
-            }
-        }
-        if (lDo) {
-            PDNODE lTemp = getNewNode(pNombre);
-            aHead->sPrev = lTemp;
-            lTemp->sNext = aHead;
-            aHead = lTemp;
-        }
-    }
-} // push_front*/
 
 void DList::push_back(string pNombre, string pApellido,
     string pFNac, double pSalario)
@@ -482,50 +379,41 @@ void DList::push_back(string pNombre, string pApellido,
     }
 } // push_back
 
-/*void DList::push(string pNombre)
+void DList::pop_front(void) //borrar la direccion de memoria de aHead
 {
-    if (aHead == NULL) {
-        aHead = getNewNode(pNombre);
-        aTail = aHead;
-    }
-    else {
-        if (pNombre <= aHead->sNombre)
-            push_front(pNombre);
-        else if (pNombre >= aTail->sNombre)
-            push_back(pNombre);
-        else {
-            PDNODE lItem = search(pNombre);
-            if (lItem) {
-                if (aFrec && (lItem->sNombre == pNombre)) {
-                    (lItem->sFrec)++;
-                }
-                else {
-                    PDNODE lTemp = getNewNode(pNombre);
-                    lTemp->sNext = lItem;
-                    lTemp->sPrev = lItem->sPrev;
-                    lItem->sPrev->sNext = lTemp;
-                    lItem->sPrev = lTemp;
-                }
-            }
+    if (aHead) {
+        PDNODE lTemp = aHead->sNext; //crea una direccion de memoria temporal con la siguiente direccion de memoria al aHead
+        bool lEqual = (aHead == aCurr); //si el aHead es igual al Acurr, lEqual será verdadero, sino falso
+        delete aHead; //borra el aHead
+        aHead = lTemp; //ahora el aHead será la variable temporal
+        if (aHead) { //si existe el aHead
+            aHead->sPrev = NULL; //el previo del aHead será nulo 
+            aCurr = (lEqual ? aHead : aCurr); //y aCurr será aHead si estaba en el aHead, sino seguirá siendo aCurr
+        }
+        else { //si no existe la lista, el aTail y el aCurr serán nulos
+            aTail = NULL;
+            aCurr = NULL;
         }
     }
-} // push*/
+} // pop_front
 
-/*PDNODE DList::top_front(void)
+void DList::pop_back(void) // borra la ultima dirección de memoria, actúa parecido que el pop_front
 {
     if (aHead) {
-        return aHead;
+        PDNODE lTemp = aTail->sPrev;
+        bool lEqual = (aTail == aCurr);
+        delete aTail;
+        aTail = lTemp;
+        if (aTail) { //solo que aquí cambia el sNext porque si es la ultima posición, debe ser nulo su next
+            aTail->sNext = NULL;
+            aCurr = (lEqual ? aTail : aCurr);
+        }
+        else {
+            aHead = NULL;
+            aCurr = NULL;
+        }
     }
-    return NULL;
-} // top_front*/
-
-/*PDNODE DList::top_back(void)
-{
-    if (aHead) {
-        return aTail;
-    }
-    return NULL;
-} // top_back*/
+} // pop_back
 
 PDATA DList::get(ECampos pCampo, bool pRev)
 {
@@ -541,92 +429,32 @@ PDATA DList::get(ECampos pCampo, bool pRev)
     return lTemp;
 } // get
 
-/*void DList::pop_front(void)
+
+void DList::del(string pNombre)
 {
-    bool lDo = true;
-
-    if (aHead) {
-        if (aFrec) {
-            (aHead->sFrec)--;
-            if (aHead->sFrec > 0)
-                lDo = false;
+    PDNODE lTemp = find(pNombre);
+    if (lTemp) {
+        aINom->del(lTemp->sData);
+        aIApe->del(lTemp->sData);
+        aIFNa->del(lTemp->sData);
+        aISal->del(lTemp->sData);
+    }
+    if (aHead->sData->sNombre == pNombre) {
+        pop_front();
+    }
+    else if (aTail->sData->sNombre == pNombre) {
+        pop_back();
+    }
+    else {
+        if (lTemp) {
+            if (aCurr == lTemp)
+                aCurr = lTemp->sNext;
+            lTemp->sPrev->sNext = lTemp->sNext;
+            lTemp->sNext->sPrev = lTemp->sPrev;
+            delete lTemp;
         }
     }
-    else
-        lDo = false;
-    if (lDo) {
-        PDNODE lTemp = aHead->sNext;
-        bool lEqual = (aHead == aCurr);
-        delete aHead;
-        aHead = lTemp;
-        if (aHead) {
-            aHead->sPrev = NULL;
-            aCurr = (lEqual ? aHead : aCurr);
-        }
-        else {
-            aTail = NULL;
-            aCurr = NULL;
-        }
-    }
-} // pop_front*/
-
-/*void DList::pop_back(void)
-{
-    bool lDo = true;
-
-    if (aHead) {
-        if (aFrec) {
-            (aTail->sFrec)--;
-            if (aTail->sFrec > 0)
-                lDo = false;
-        }
-    }
-    else
-        lDo = false;
-    if (lDo) {
-        PDNODE lTemp = aTail->sPrev;
-        bool lEqual = (aTail == aCurr);
-        delete aTail;
-        aTail = lTemp;
-        if (aTail) {
-            aTail->sNext = NULL;
-            aCurr = (lEqual ? aTail : aCurr);
-        }
-        else {
-            aHead = NULL;
-            aCurr = NULL;
-        }
-    }
-} // pop_back*/
-
-/*void DList::del(string pNombre, bool pForce)
-{
-    if (aHead) {
-        if (aHead->sNombre == pNombre)
-            pop_front();
-        else if (aTail->sNombre == pNombre)
-            pop_back();
-        else {
-            PDNODE lTemp = find(pNombre);
-            if (lTemp) {
-                if (!aFrec)
-                    lTemp->sFrec = 0;
-                else
-                    if (!pForce)
-                        (lTemp->sFrec)--;
-                    else
-                        lTemp->sFrec = 0;
-                if (lTemp->sFrec == 0) {
-                    if (aCurr == lTemp)
-                        aCurr = lTemp->sNext;
-                    lTemp->sPrev->sNext = lTemp->sNext;
-                    lTemp->sNext->sPrev = lTemp->sPrev;
-                    delete lTemp;
-                }
-            }
-        }
-    }
-} // del*/
+} // del
 
 bool DList::isEmpty(void)
 {
@@ -645,74 +473,20 @@ void DList::repr(ECampos pCampo, bool pRev)
     }
 } // repr
 
-/*void DList::read(string pPath, char pMethod)
-{
-    auto lStart = chrono::high_resolution_clock::now();
-    string lLine = "";
-    ifstream lFile(pPath);
 
-    while (getline(lFile, lLine)) {
-        switch (pMethod) {
-        case 'b':
-            push_back(lLine);
-            break;
-        case 'f':
-            push_front(lLine);
-            break;
-        default:
-            push(lLine);
-            break;
-        }
-    }
-
-    lFile.close();
-
-    auto lElapsed = chrono::high_resolution_clock::now() - lStart;
-    long long lMS = chrono::duration_cast<chrono::microseconds>
-        (lElapsed).count();
-    cout << lMS << " ms" << endl;
-} // read*/
-
-/*void DList::write(string pPath, bool pRev)
-{
-    if (aHead) {
-        ofstream lFile(pPath);
-        if (lFile.is_open()) {
-            PDNODE lTemp = (pRev == false ? aHead : aTail);
-            while (lTemp) {
-                lFile << lTemp->sNombre << endl;
-                lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
-            }
-            lFile.close();
-        }
-    }
-} // write*/
-
-/*PDNODE DList::find(string pNombre)
+PDNODE DList::find(string pNombre)
 {
     PDNODE lTemp = aHead;
 
     while (lTemp) {
-        if (pNombre == lTemp->sNombre)
+        if (pNombre == lTemp->sData->sNombre)
             return lTemp;
         lTemp = lTemp->sNext;
     }
 
     return NULL;
-} // find*/
+} // find
 
-/*PDNODE DList::search(string pNombre)
-{
-    PDNODE lTemp = aHead;
-
-    while (lTemp) {
-        if (pNombre <= lTemp->sNombre)
-            return lTemp;
-        lTemp = lTemp->sNext;
-    }
-
-    return NULL;
-} // search*/
 
 PDNODE DList::getNewNode(string pNombre, string pApellido,
     string pFNac, double pSalario)

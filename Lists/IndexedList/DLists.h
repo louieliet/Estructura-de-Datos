@@ -49,13 +49,13 @@ public:
     void push_back(PDATA pData);
     void push(PDATA pData);
 
-    //PDNODE top_front(void);
-    //PDNODE top_back(void);
+    PDNODE top_front(void);
+    PDNODE top_back(void);
     PDATA get(bool pRev = false);
 
-    //void pop_front(void);
-    //void pop_back(void);
-    void del(string pNombre, string pApellido, string pFNac, string pSalario);
+    void pop_front(void);
+    void pop_back(void);
+    void del(PDATA pData);
 
     bool isEmpty(void);
     void repr(bool pRev = false);
@@ -64,7 +64,7 @@ public:
 
 private:
     int comp(PDATA pA, PDATA pB);
-    //PDNODE find(string pNombre);
+    PDNODE find(PDATA pData);
     PDNODE search(PDATA pData);
     PDNODE getNewNode(PDATA pData);
 }; //DLIndex
@@ -97,9 +97,9 @@ public:
     //PDNODE top_back(void);
     PDATA get(ECampos pCampo, bool pRev = false);
 
-    //void pop_front(void);
-    //void pop_back(void);
-    //void del(string pNombre, bool pForce = false);
+    void pop_front(void);
+    void pop_back(void);
+    void del(string pNombre);
 
     bool isEmpty(void);
     void repr(ECampos pCampo, bool pRev = false);
@@ -107,7 +107,7 @@ public:
     //void write(string pPath, bool pRev = false);
 
 private:
-    //PDNODE find(string pNombre);
+    PDNODE find(string pNombre);
     //PDNODE search(string pNombre);
     PDNODE getNewNode(string pNombre, string pApellido,
         string pFNac, double pSalario);
