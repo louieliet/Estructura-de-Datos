@@ -117,7 +117,7 @@ void DLIndex::push(PDATA pData)
     }
 } // push
 
-void DLIndex::pop_front(void) //borrar la direccion de memoria de aHead
+void DLIndex::pop_front(void) 
 {
     if (aHead) {
         PDNODE lTemp = aHead->sNext;
@@ -138,7 +138,7 @@ void DLIndex::pop_front(void) //borrar la direccion de memoria de aHead
     }
 } // pop_front
 
-void DLIndex::pop_back(void) // borra la ultima dirección de memoria, actúa parecido que el pop_front
+void DLIndex::pop_back(void) 
 {
     bool lDo = true;
 
@@ -148,7 +148,7 @@ void DLIndex::pop_back(void) // borra la ultima dirección de memoria, actúa pa
         bool lEqual = (aTail == aCurr);
         delete aTail;
         aTail = lTemp;
-        if (aTail) { //solo que aquí cambia el sNext porque si es la ultima posición, debe ser nulo su next
+        if (aTail) { 
             aTail->sNext = NULL;
             aCurr = (lEqual ? aTail : aCurr);
         }
@@ -182,7 +182,7 @@ PDATA DLIndex::get(bool pRev)
     return lTemp;
 } // get
 
-PDNODE DLIndex::find(PDATA pData) // solo busca que sea igual a un nombre en una dirección de memoria, si no, regresa NULL
+PDNODE DLIndex::find(PDATA pData)
 {
     PDNODE lTemp = aHead;
 
@@ -195,16 +195,16 @@ PDNODE DLIndex::find(PDATA pData) // solo busca que sea igual a un nombre en una
     return NULL;
 } // find 
 
-void DLIndex::del(PDATA pData) //borra un elemento cualquiera de la lista
+void DLIndex::del(PDATA pData) 
 {
-    if (aHead) { //verifica que la lista exista
-        if (aHead->sData->sNombre == pData->sNombre) //si el string que se quiere borrar es igual al nombre guardado en aHead, hace un pop_front
+    if (aHead) { 
+        if (aHead->sData->sNombre == pData->sNombre) 
             pop_front();
-        else if (aTail->sData->sNombre == pData->sNombre) //si el string que se quiere borrar es igual al nombre guardado en aTail, hace un pop_back
+        else if (aTail->sData->sNombre == pData->sNombre) 
             pop_back();
-        else { //si no está ni en aHead ni aTail
-            PDNODE lTemp = find(pData); //busca dónde está el nombre
-            if (lTemp) { //si existe esa direccion de memoria
+        else { 
+            PDNODE lTemp = find(pData); 
+            if (lTemp) { 
                 if (aCurr == lTemp)
                     aCurr = lTemp->sNext;
                 lTemp->sPrev->sNext = lTemp->sNext;
@@ -230,8 +230,6 @@ void DLIndex::repr(bool pRev)
             cout << lTemp->sData->sApellido << ", ";
             cout << lTemp->sData->sFNac << ", ";
             cout << lTemp->sData->sSalario << "] ";
-            /*if (aFrec)
-                cout << " #" << lTemp->sFrec;*/
             lTemp = (pRev == false ? lTemp->sNext : lTemp->sPrev);
         }
         cout << " ->|| " << endl;
@@ -379,32 +377,32 @@ void DList::push_back(string pNombre, string pApellido,
     }
 } // push_back
 
-void DList::pop_front(void) //borrar la direccion de memoria de aHead
+void DList::pop_front(void) 
 {
     if (aHead) {
-        PDNODE lTemp = aHead->sNext; //crea una direccion de memoria temporal con la siguiente direccion de memoria al aHead
-        bool lEqual = (aHead == aCurr); //si el aHead es igual al Acurr, lEqual será verdadero, sino falso
-        delete aHead; //borra el aHead
-        aHead = lTemp; //ahora el aHead será la variable temporal
-        if (aHead) { //si existe el aHead
-            aHead->sPrev = NULL; //el previo del aHead será nulo 
-            aCurr = (lEqual ? aHead : aCurr); //y aCurr será aHead si estaba en el aHead, sino seguirá siendo aCurr
+        PDNODE lTemp = aHead->sNext; 
+        bool lEqual = (aHead == aCurr); 
+        delete aHead;
+        aHead = lTemp;
+        if (aHead) { 
+            aHead->sPrev = NULL; 
+            aCurr = (lEqual ? aHead : aCurr); 
         }
-        else { //si no existe la lista, el aTail y el aCurr serán nulos
+        else { 
             aTail = NULL;
             aCurr = NULL;
         }
     }
 } // pop_front
 
-void DList::pop_back(void) // borra la ultima dirección de memoria, actúa parecido que el pop_front
+void DList::pop_back(void) 
 {
     if (aHead) {
         PDNODE lTemp = aTail->sPrev;
         bool lEqual = (aTail == aCurr);
         delete aTail;
         aTail = lTemp;
-        if (aTail) { //solo que aquí cambia el sNext porque si es la ultima posición, debe ser nulo su next
+        if (aTail) { 
             aTail->sNext = NULL;
             aCurr = (lEqual ? aTail : aCurr);
         }
