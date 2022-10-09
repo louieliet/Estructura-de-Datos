@@ -437,21 +437,6 @@ void DList::del(string pNombre)
         aIFNa->del(lTemp->sData);
         aISal->del(lTemp->sData);
     }
-    if (aHead->sData->sNombre == pNombre) {
-        pop_front();
-    }
-    else if (aTail->sData->sNombre == pNombre) {
-        pop_back();
-    }
-    else {
-        if (lTemp) {
-            if (aCurr == lTemp)
-                aCurr = lTemp->sNext;
-            lTemp->sPrev->sNext = lTemp->sNext;
-            lTemp->sNext->sPrev = lTemp->sPrev;
-            delete lTemp;
-        }
-    }
 } // del
 
 bool DList::isEmpty(void)
