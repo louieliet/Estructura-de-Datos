@@ -437,6 +437,8 @@ void DList::del(string pNombre)
         aIFNa->del(lTemp->sData);
         aISal->del(lTemp->sData);
     }
+
+    delete lTemp;
 } // del
 
 bool DList::isEmpty(void)
