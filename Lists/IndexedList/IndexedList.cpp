@@ -17,6 +17,7 @@ int main(){
     lLista.del("Neils");
 
 
+
     lLista.repr(ECampos::nombre);
 
     /*lLista.repr(ECampos::salario);
