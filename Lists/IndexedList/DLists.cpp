@@ -197,20 +197,25 @@ PDNODE DLIndex::find(PDATA pData)
 
 void DLIndex::del(PDATA pData) 
 {
-    if (aHead) { 
-        if (aHead->sData->sNombre == pData->sNombre) 
+    if(aHead){
+        if(aHead->sData->sNombre == pData->sNombre)
             pop_front();
-        else if (aTail->sData->sNombre == pData->sNombre) 
+        else if(aTail->sData->sNombre == pData->sNombre)
             pop_back();
-        else { 
+        else{
+            cout << "Mid" << endl;
             PDNODE lTemp = find(pData); 
+            cout << "Acces Memory" << endl;
             if (lTemp) { 
-                if (aCurr == lTemp)
+                if (aCurr == lTemp){
                     aCurr = lTemp->sNext;
-                lTemp->sPrev->sNext = lTemp->sNext;
+                }
                 lTemp->sNext->sPrev = lTemp->sPrev;
-                delete lTemp;
+                lTemp->sPrev->sNext = lTemp->sNext;
             }
+            cout << "Deleted" << endl;
+            cout << endl;
+            delete lTemp;
         }
     }
 }
@@ -432,13 +437,21 @@ void DList::del(string pNombre)
 {
     PDNODE lTemp = find(pNombre);
     if (lTemp) {
+
+        cout << "Del nom" << endl;
         aINom->del(lTemp->sData);
+
+        cout << "Del ap" << endl;
         aIApe->del(lTemp->sData);
+
+        cout << "Del fnac" << endl;
         aIFNa->del(lTemp->sData);
+
+        cout << "Del sal" << endl;
         aISal->del(lTemp->sData);
+
     }
 
-    delete lTemp;
 } // del
 
 bool DList::isEmpty(void)
@@ -448,6 +461,7 @@ bool DList::isEmpty(void)
 
 void DList::repr(ECampos pCampo, bool pRev)
 {
+    cout << "repr" << endl;
     if (aHead) {
         switch (pCampo) {
             case ECampos::nombre: aINom->repr(pRev); break;
