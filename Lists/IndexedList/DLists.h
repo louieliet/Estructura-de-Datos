@@ -1,8 +1,3 @@
-#pragma once
-
-//#ifndef __dlists_h_
-//#define __dlists_h_
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -14,21 +9,23 @@ typedef struct DNODE* PDNODE;
 
 typedef struct DATA* PDATA;
 
-struct DATA {
+struct DATA {//informacion
     string sNombre;
     string sApellido;
     string sFNac;
     double sSalario;
 };
 
-struct DNODE {
+struct DNODE {//nodos de la estructura
     PDATA sData;
     int sFrec;
     PDNODE sPrev;
     PDNODE sNext;
 };
 
-enum class ECampos {nombre, apellido, fnac, salario};
+enum class ECampos {nombre, apellido, fnac, salario};//campos de nuetra lista (parecido a int)
+
+ 
 
 class DLIndex
 {
@@ -40,10 +37,10 @@ protected:
     ECampos aType;
 
 public:
-    DLIndex(ECampos pType, bool pFrec = false);
-    ~DLIndex(void);
+    DLIndex(ECampos pType, bool pFrec = false);//costructor
+    ~DLIndex(void);//destructor
 
-    void clean(void);
+    void clean(void);//borrar lista
 
     void push_front(PDATA pData);
     void push_back(PDATA pData);
@@ -51,7 +48,7 @@ public:
 
     PDNODE top_front(void);
     PDNODE top_back(void);
-    PDATA get(bool pRev = false);
+    PDATA get(bool pRev = false);//obtiene la lista
 
     void pop_front(void);
     void pop_back(void);
@@ -63,11 +60,13 @@ public:
     //void write(string pPath, bool pRev = false);
 
 private:
-    int comp(PDATA pA, PDATA pB);
+    int comp(PDATA pA, PDATA pB);//comparar info
     PDNODE find(PDATA pData);
     PDNODE search(PDATA pData);
-    PDNODE getNewNode(PDATA pData);
-}; //DLIndex
+    PDNODE getNewNode(PDATA pData);//crear nuevo nodo
+
+}; 
+//--------------------------------------------------------------------------DLIndex--------------------------------------------------
 
 class DList
 {

@@ -166,6 +166,7 @@ void DLIndex::pop_back(void)
 } // pop_back
 
 
+
 PDATA DLIndex::get(bool pRev)
 {
     PDATA lTemp = NULL;
@@ -195,6 +196,11 @@ PDNODE DLIndex::find(PDATA pData)
     return NULL;
 } // find 
 
+
+bool DLIndex::isEmpty(void)
+{
+    return (aHead == NULL);
+} // isEmpty
 void DLIndex::del(PDATA pData) 
 {
     if(aHead){
@@ -219,11 +225,6 @@ void DLIndex::del(PDATA pData)
         }
     }
 }
-
-bool DLIndex::isEmpty(void)
-{
-    return (aHead == NULL);
-} // isEmpty
 
 void DLIndex::repr(bool pRev)
 {
@@ -299,7 +300,9 @@ PDNODE DLIndex::getNewNode(PDATA pData)
 } // getNewNode
 
 
-//-----------
+
+
+//-------------------------------------------------------------DList--------------------------------------------------------------------
 
 
 DList::DList(bool pFrec)
@@ -418,6 +421,8 @@ void DList::pop_back(void)
     }
 } // pop_back
 
+
+
 PDATA DList::get(ECampos pCampo, bool pRev)
 {
     PDATA lTemp = NULL;
@@ -432,6 +437,12 @@ PDATA DList::get(ECampos pCampo, bool pRev)
     return lTemp;
 } // get
 
+
+
+bool DList::isEmpty(void)
+{
+    return (aHead == NULL);
+} // isEmpty
 
 void DList::del(string pNombre)
 {
@@ -453,15 +464,8 @@ void DList::del(string pNombre)
     }
 
 } // del
-
-bool DList::isEmpty(void)
-{
-    return (aHead == NULL);
-} // isEmpty
-
 void DList::repr(ECampos pCampo, bool pRev)
 {
-    cout << "repr" << endl;
     if (aHead) {
         switch (pCampo) {
             case ECampos::nombre: aINom->repr(pRev); break;
@@ -507,3 +511,4 @@ PDNODE DList::getNewNode(string pNombre, string pApellido,
 
     return lTemp;
 } // getNewNode
+
