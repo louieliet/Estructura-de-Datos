@@ -20,7 +20,7 @@ public:
     Arbol(void);
     ~Arbol(void);
 
-    void clean(void);
+    void clean(PTNODE pSub = NULL);
     void pushr(string pVal, PTNODE pSub = NULL);
     void repr(Orden pOrd = Orden::asc, PTNODE pSub = NULL);
 private:

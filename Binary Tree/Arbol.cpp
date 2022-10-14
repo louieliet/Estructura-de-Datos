@@ -31,8 +31,18 @@ void Arbol::pushr(string pVal, PTNODE pSub){
     }
 }
 
-void Arbol::clean(void){
-
+void Arbol::clean(PTNODE pSub){
+    if(aRoot){
+        PTNODE lTemp = aRoot;
+        if(pSub)
+            lTemp = pSub;
+        if(lTemp->sLeft) clean(lTemp->sLeft);
+        if(lTemp->sRight) clean(lTemp->sRight);
+        bool lRoot = lTemp == aRoot;
+        delete lTemp;
+        if(lRoot)
+            aRoot = NULL;
+    }
 }
 
 void Arbol::repr(Orden pOrd, PTNODE pSub){
