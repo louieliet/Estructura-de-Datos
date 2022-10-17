@@ -29,6 +29,30 @@ void Arbol::pushr(string pVal, PTNODE pSub){
                 lTemp->sRight = getNewNode(pVal);
         }
     }
+
+}
+void Arbol::push(string pVal){
+    if(aRoot == NULL){
+        aRoot = getNewNode(pVal);
+    }
+    else{
+        PTNODE lTemp = aRoot;
+        while(lTemp){
+            if(pVal < lTemp->sVal){
+                if(lTemp->sLeft) lTemp = lTemp->sLeft;
+                else {lTemp->sLeft = getNewNode(pVal);
+                lTemp = NULL;}
+            }
+            else if(pVal > lTemp->sVal){
+                if(lTemp->sRight) lTemp = lTemp->sRight;
+                else{lTemp->sRight = getNewNode(pVal); lTemp = NULL;}
+            }
+            else{
+                if(lTemp->sRight) lTemp = lTemp->sRight;
+                else{lTemp->sRight = getNewNode(pVal); lTemp = NULL;}
+            }
+        }
+    }
 }
 
 void Arbol::clean(PTNODE pSub){
@@ -45,27 +69,46 @@ void Arbol::clean(PTNODE pSub){
     }
 }
 
-void Arbol::repr(Orden pOrd, PTNODE pSub){
+void Arbol::reprr(Orden pOrd, PTNODE pSub){
     if(aRoot){
         PTNODE lTemp = aRoot;
         if(pSub)
             lTemp = pSub;
         switch(pOrd){
             case Orden::asc: 
-                if(lTemp->sLeft) repr(pOrd, lTemp->sLeft);
+                if(lTemp->sLeft) reprr(pOrd, lTemp->sLeft);
                 cout << lTemp->sVal << ", ";
-                if(lTemp->sRight) repr(pOrd, lTemp->sRight);
+                if(lTemp->sRight) reprr(pOrd, lTemp->sRight);
                 break;
             case Orden::desc: 
-                if(lTemp->sRight) repr(pOrd, lTemp->sRight);
+                if(lTemp->sRight) reprr(pOrd, lTemp->sRight);
                 cout << lTemp->sVal << ", ";
-                if(lTemp->sLeft) repr(pOrd, lTemp->sLeft);
+                if(lTemp->sLeft) reprr(pOrd, lTemp->sLeft);
                 break;
             case Orden::sinorden: 
                 cout << lTemp->sVal << ", ";
-                if(lTemp->sLeft) repr(pOrd, lTemp->sLeft);
-                if(lTemp->sRight) repr(pOrd, lTemp->sRight);
+                if(lTemp->sLeft) reprr(pOrd, lTemp->sLeft);
+                if(lTemp->sRight) reprr(pOrd, lTemp->sRight);
                 break;
+        }
+    }
+}
+
+void Arbol::repr(Orden pOrd){
+    if(aRoot){
+        PTNODE lTemp = aRoot;
+        stack<PTNODE> lStack;
+        while(lTemp || lStack.empty() == false){
+            if(lTemp){
+                lStack.push(lTemp);
+                lTemp = lTemp->sLeft;
+            }
+            else{
+                lTemp = lStack.top();
+                lStack.pop();
+                cout << lTemp->sVal << ", ";
+                lTemp = lTemp->sRight;
+            }
         }
     }
 }

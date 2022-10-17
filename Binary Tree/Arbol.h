@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -22,7 +23,9 @@ public:
 
     void clean(PTNODE pSub = NULL);
     void pushr(string pVal, PTNODE pSub = NULL);
-    void repr(Orden pOrd = Orden::asc, PTNODE pSub = NULL);
+    void push(string pVal);
+    void reprr(Orden pOrd = Orden::asc, PTNODE pSub = NULL);
+    void repr(Orden pOrd = Orden::asc);
 private:
     PTNODE getNewNode(string pVal);
 };
