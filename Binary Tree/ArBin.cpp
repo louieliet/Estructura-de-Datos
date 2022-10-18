@@ -1,5 +1,13 @@
 #include "Arbol.cpp"
 
+string gTodas = "";
+
+void showVal(string pVal){
+    cout << "De afuera del arbol: " << pVal << endl;
+    gTodas += pVal + " ";
+}
+
+
 int main(){
     
     Arbol lArb = Arbol();
@@ -16,7 +24,10 @@ int main(){
     lArb.repr(Orden::asc);
     cout << endl;
 
-    lArb.delr("Manzana");
+    lArb.runGet(&showVal);
+    cout << gTodas << endl;
+
+    /*lArb.delr("Manzana");
 
     lArb.repr(Orden::asc);
     cout << endl;
@@ -26,5 +37,5 @@ int main(){
     lArb.delr("Aguacate");
 
     lArb.repr(Orden::asc);
-    cout << endl;
+    cout << endl;*/
 }

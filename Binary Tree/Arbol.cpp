@@ -174,6 +174,26 @@ PTNODE Arbol::pdelr(PTNODE pSub, string pVal){
     return pSub;
 }
 
+void Arbol::runGet(void(*pFunc)(string)){
+
+    if(aRoot && (pFunc != NULL)){
+        PTNODE lTemp = aRoot;
+        stack <PTNODE> lStack;
+
+        while(lTemp || lStack.empty() == false){
+            if(lTemp){
+                lStack.push(lTemp);
+                lTemp = lTemp->sLeft;
+            }
+            else{
+                lTemp = lStack.top();
+                lStack.pop();
+                pFunc(lTemp->sVal);
+                lTemp = lTemp->sRight;
+            }
+        }
+    }
+}
 PTNODE Arbol::min(PTNODE pSub){
     PTNODE lTemp = pSub;
     while(lTemp && (lTemp->sLeft)){
