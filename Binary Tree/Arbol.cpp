@@ -167,10 +167,11 @@ PTNODE Arbol::pdelr(PTNODE pSub, string pVal){
             delete pSub;
             return lTemp;
         }
-        else{
-            PTNODE lTemp = min(pSub->sRight);
-        }
+        PTNODE lTemp = min(pSub->sRight);
+        pSub->sVal = lTemp->sVal; //Virtual delete
+        pSub->sRight = pdelr(pSub->sRight, lTemp->sVal);   
     }
+    return pSub;
 }
 
 
