@@ -13,8 +13,10 @@ int main(){
     lArb.push("Rambutan");
     lArb.push("Aguacate");
 
-    lArb.repr();
+    lArb.repr(Orden::asc);
     cout << endl;
-
-    lArb.reprr();
+    lArb.repr(Orden::desc);
+    cout << endl;
+    lArb.repr(Orden::sinorden);
+    cout << endl;
 }

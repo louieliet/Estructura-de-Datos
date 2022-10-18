@@ -69,6 +69,10 @@ void Arbol::clean(PTNODE pSub){
     }
 }
 
+void Arbol::delr(string pVal){
+    aRoot = pdelr(aRoot,pVal);
+}
+
 void Arbol::reprr(Orden pOrd, PTNODE pSub){
     if(aRoot){
         PTNODE lTemp = aRoot;
@@ -99,19 +103,76 @@ void Arbol::repr(Orden pOrd){
         PTNODE lTemp = aRoot;
         stack<PTNODE> lStack;
         while(lTemp || lStack.empty() == false){
-            if(lTemp){
-                lStack.push(lTemp);
-                lTemp = lTemp->sLeft;
-            }
-            else{
-                lTemp = lStack.top();
-                lStack.pop();
-                cout << lTemp->sVal << ", ";
-                lTemp = lTemp->sRight;
+
+            switch(pOrd){
+                case Orden::asc: 
+                    if(lTemp){
+                        lStack.push(lTemp);
+                        lTemp = lTemp->sLeft;
+                    }
+                    else{
+                        lTemp = lStack.top();
+                        lStack.pop();
+                        cout << lTemp->sVal << ", ";
+                        lTemp = lTemp->sRight;
+                    }
+                    break;
+                case Orden::desc: 
+                    if(lTemp){
+                        lStack.push(lTemp);
+                        lTemp = lTemp->sRight;
+                    }
+                    else{
+                        lTemp = lStack.top();
+                        lStack.pop();
+                        cout << lTemp->sVal << ", ";
+                        lTemp = lTemp->sLeft;
+                    }
+                    break;
+                case Orden::sinorden: 
+                    if(lTemp){
+                        cout << lTemp->sVal << ", ";
+                        lStack.push(lTemp);
+                        lTemp = lTemp->sLeft;
+                    }
+                    else{
+                        lTemp = lStack.top();
+                        lStack.pop();
+                        lTemp = lTemp->sRight;
+                    }
+                    break;
             }
         }
     }
 }
+
+PTNODE Arbol::pdelr(PTNODE pSub, string pVal){
+    if(pSub == NULL){
+        return pSub;
+    }
+    if(pVal < pSub->sVal){
+        pSub->sLeft = pdelr(pSub->sLeft,pVal);
+    }
+    else if(pVal > pSub->sVal){
+        pSub->sRight = pdelr(pSub->sRight,pVal);
+    }
+    else{
+        if(pSub->sLeft == NULL){
+            PTNODE lTemp = pSub->sRight;
+            delete pSub;
+            return lTemp;
+        }
+        else if(pSub->sRight == NULL){
+            PTNODE lTemp = pSub->sLeft;
+            delete pSub;
+            return lTemp;
+        }
+        else{
+            PTNODE lTemp = min(pSub->sRight);
+        }
+    }
+}
+
 
 PTNODE Arbol::getNewNode(string pVal){
     PTNODE lTemp = new TNODE;

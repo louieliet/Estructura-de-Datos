@@ -26,6 +26,8 @@ public:
     void push(string pVal);
     void reprr(Orden pOrd = Orden::asc, PTNODE pSub = NULL);
     void repr(Orden pOrd = Orden::asc);
+    void delr(string pVal);
 private:
     PTNODE getNewNode(string pVal);
+    PTNODE pdelr(PTNODE pSub, string pVal);
 };
