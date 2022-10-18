@@ -5,7 +5,7 @@ int main(){
     Arbol lArb = Arbol();
 
     lArb.push("Manzana");
-    lArb.push("Platanos");
+    lArb.push("Platano");
     lArb.push("Pera");
     lArb.push("Durazno");
     lArb.push("Naranja");
@@ -15,8 +15,16 @@ int main(){
 
     lArb.repr(Orden::asc);
     cout << endl;
-    lArb.repr(Orden::desc);
+
+    lArb.delr("Manzana");
+
+    lArb.repr(Orden::asc);
     cout << endl;
-    lArb.repr(Orden::sinorden);
+
+    lArb.delr("Durazno");
+    lArb.delr("Cereza");
+    lArb.delr("Aguacate");
+
+    lArb.repr(Orden::asc);
     cout << endl;
 }

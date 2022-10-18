@@ -30,4 +30,5 @@ public:
 private:
     PTNODE getNewNode(string pVal);
     PTNODE pdelr(PTNODE pSub, string pVal);
+    PTNODE min(PTNODE pSub);
 };

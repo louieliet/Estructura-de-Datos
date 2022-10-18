@@ -174,6 +174,14 @@ PTNODE Arbol::pdelr(PTNODE pSub, string pVal){
     return pSub;
 }
 
+PTNODE Arbol::min(PTNODE pSub){
+    PTNODE lTemp = pSub;
+    while(lTemp && (lTemp->sLeft)){
+        lTemp = lTemp->sLeft;
+    }
+    return lTemp;
+}
+
 
 PTNODE Arbol::getNewNode(string pVal){
     PTNODE lTemp = new TNODE;
