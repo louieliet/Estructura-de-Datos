@@ -11,6 +11,9 @@ int main()
     lLista.push("Mexicana","Chilaquiles","2");
     lLista.push("Mexicana","Enfrijoladas","801");
 
+    lLista.push("Peruana","Palomas","40");
+    lLista.push("Peruana","Tierra","3");
+
     lLista.max();
     lLista.min();
 

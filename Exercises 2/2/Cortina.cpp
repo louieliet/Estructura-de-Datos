@@ -138,7 +138,7 @@ void DLVer::max(){
         PVNODE pMax;
 
         while(lTemp){
-            if(lTemp->sVotos > aHead->sVotos)
+            if(lTemp->sVotos >= aHead->sVotos)
             {
                 pMax = lTemp;
             }
@@ -447,14 +447,13 @@ void DLHor::max()
     if(aHead){
         PHNODE lTemp = aHead;
         while(lTemp){
-            cout << "Max de: " << lTemp->sCat << endl;
-            lTemp->sVer->max();
+            if(lTemp->sVer)
+                cout << "Max de: " << lTemp->sCat << endl;
+                lTemp->sVer->max();
             lTemp = lTemp->sNext;
         }
-
     }
 }
-
 void DLHor::min()
 {
     if(aHead){
