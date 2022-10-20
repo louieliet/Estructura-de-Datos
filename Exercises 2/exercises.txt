@@ -1,0 +1,18 @@
+
+Programe lo necesario para resolver lo siguiente: 
+
+
+- Le dan una lista de palabras en desorden y le piden determinar la frecuencia en la que aparecen cada una de ellas.
+
+
+- Se hizo una encuesta a nivel regional para saber los tipos de comida más gustados. 
+Quedaron las categorías, sin ningún orden, de la siguiente manera: China, Mexicana, Peruana, Japonesa y Francesa.
+ Para cada tipo de comida los comensales votaron por el platillo que les gustaba más. 
+ Es necesario que indique el más y el menos gustado de cada tipo de comida.
+
+
+- Le dan tres archivos de texto y le piden almacenarlos en una estructura que le permita tener 
+todos los renglones en memoria en el mismo orden en el que están en el archivo. Le piden generar un nuevo archivo 
+con la mezcla de los tres archivos, haciendo que el renglón 1 del primer archivo se escriba en el nuevo archivo, 
+luego el renglón 1 del segundo archivo, luego el renglón 1 del tercer archivo y así sucesivamente. 
+No tienen por qué tener el mismo número de renglones los archivos.
