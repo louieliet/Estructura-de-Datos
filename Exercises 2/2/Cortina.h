@@ -42,6 +42,7 @@ public:
     bool isEmpty(void);
     void repr(bool pRev = false);
     void max();
+    void min();
 
 private:
     void push_front(string pMain, string sVotos);
@@ -92,6 +93,7 @@ public:
     void read(string pPath);
     void write(string pPath, bool pRev = false);
     void max();
+    void min();
 
 private:
     void push_front(string pCat, string pMain, string pVotos);

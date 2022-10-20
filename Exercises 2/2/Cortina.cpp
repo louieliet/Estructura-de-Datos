@@ -144,7 +144,24 @@ void DLVer::max(){
             }
             lTemp = lTemp->sNext;
         }
-        cout << pMax->sPlatillo << pMax->sVotos;
+
+        cout << pMax->sPlatillo << pMax->sVotos << endl;
+    }
+}
+
+void DLVer::min(){
+    if(aHead){
+        PVNODE lTemp = aHead;
+        PVNODE pMax;
+
+        while(lTemp){
+            if(lTemp->sVotos < aHead->sVotos)
+            {
+                pMax = lTemp;
+            }
+            lTemp = lTemp->sNext;
+        }
+        cout << pMax->sPlatillo << pMax->sVotos << endl;
     }
 }
 
@@ -432,8 +449,21 @@ void DLHor::max()
     if(aHead){
         PHNODE lTemp = aHead;
         while(lTemp){
-            if(lTemp->sVer)
+            if(lTemp->sVer){
                 lTemp->sVer->max();
+            }
+            lTemp = lTemp->sNext;
+        }
+    }
+}
+
+void DLHor::min()
+{
+    if(aHead){
+        PHNODE lTemp = aHead;
+        while(lTemp){
+            if(lTemp->sVer)
+                lTemp->sVer->min();
             lTemp = lTemp->sNext;
         }
     }
