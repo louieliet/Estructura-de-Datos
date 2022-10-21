@@ -87,8 +87,7 @@ void DList::clean(void) {
 
     aHead = NULL;
     aTail = NULL;
-
-}//limpia
+}
 
 void DList::pop_front(void) {
     if (aHead) {
@@ -141,7 +140,7 @@ void DList::push_front(string pNombre) {
 
     }
 
-}//hace un push antes de la primera  posición
+}
 
 void DList::push_back(string pNombre) {
     if (aHead == NULL) {
@@ -172,7 +171,7 @@ PDNODE DList::get(bool pRev) {
     }
     return lTemp;
 
-} //da d
+} 
 
 PDNODE DList:: search(string pNombre) { 
 
@@ -260,7 +259,7 @@ void DList::pushVector(vector<string> list){
 }
 
 int main(){
-    
+
     DList lLista = DList();
 
     vector<string> singersList;
