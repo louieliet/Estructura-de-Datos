@@ -14,6 +14,8 @@ int main()
     lLista.push("Peruana","Palomas","40");
     lLista.push("Peruana","Tierra","3");
 
+    lLista.repr();
+
     lLista.max();
     lLista.min();
 
