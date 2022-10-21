@@ -1,25 +1,23 @@
-// DLists.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-//Hola
+
 #include <iostream>
 #include <string>
+#include <vector>
 
-/*Cada nodo es una estructura*/
+
 using namespace std;
 
-typedef struct DNODE* PDNODE; // aapuntador del tipo DNODE
-//typedef es una palabra reservada que nos permite definir un nuevo tipo
+typedef struct DNODE* PDNODE; 
 typedef struct DNODE {
     string sNombre;
-    int sFrec; //para frecuencia 
-    PDNODE sNext; //apunta a ruta de memoria siguiente
-    PDNODE sPrev; //apunta a ruta de memoria anterior
+    int sFrec;  
+    PDNODE sNext; 
+    PDNODE sPrev; 
 };
 
 class DList {
 protected:
-    PDNODE aHead; //donde empieza la lista
-    PDNODE aTail; //posición donde termina la lista (temporal porque puedes agregar más datos)
+    PDNODE aHead; 
+    PDNODE aTail; 
     PDNODE aCurr;
 public:
     DList(void);
@@ -30,13 +28,15 @@ public:
     void push_back(string pNombre);
     void push(string pNombre);
 
+    void pushv(vector<string> pVector);
+
     PDNODE top_front(void);
     PDNODE top_back(void);
     PDNODE get(bool pRev = false);
 
     void pop_front(void);
     void pop_back(void);
-    // void repr(void);
+
 
     bool isEmpty(void);
     void repr(bool pRev = false);
@@ -57,7 +57,7 @@ DList::DList(void) {
 DList:: ~DList(void) {
 
     clean();
-} //destructor
+} 
 
 PDNODE DList::top_front(void) {
 
@@ -66,23 +66,23 @@ PDNODE DList::top_front(void) {
     }
     return NULL;
 
-} //regresa el primer valor en la lista
+}
 PDNODE DList::top_back(void) {
     if (aHead) {
         return aTail;
     }
     return NULL;
 
-} //regresa el ultimo valor de la lista
+} 
 
 void DList::clean(void) {
 
-    while (aHead) //tengo  la ruta de memoria de aHead, si no hay ruta, es null y no entra a la memoria
+    while (aHead) 
     {
         PDNODE lTemp = aHead->sNext;
         delete aHead;
 
-        aHead = lTemp; //guarda la direccion de memoria de la siguiente ruta
+        aHead = lTemp; 
 
     }
 
@@ -109,7 +109,7 @@ void DList::pop_front(void) {
         }
     }
 
-} //borrar el primer lugar en la lista
+} 
 void DList::pop_back(void) {
 
     if (aHead) {
@@ -127,12 +127,12 @@ void DList::pop_back(void) {
         }
     }
 
-} //borrar el último lugat en la lista
+} 
 
 void DList::push_front(string pNombre) {
     if (aHead == NULL) {
         aHead = getNewNode(pNombre);
-        aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
+        aTail = aHead; 
     }
     else {
         PDNODE lTemp = getNewNode(pNombre);
@@ -147,7 +147,7 @@ void DList::push_front(string pNombre) {
 void DList::push_back(string pNombre) {
     if (aHead == NULL) {
         aHead = getNewNode(pNombre);
-        aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
+        aTail = aHead; 
     }
     else {
         PDNODE lTemp = getNewNode(pNombre);
@@ -157,7 +157,7 @@ void DList::push_back(string pNombre) {
 
     }
 
-} //hace un push después de la última posición
+}
 
 PDNODE DList::get(bool pRev) {
 
@@ -175,16 +175,16 @@ PDNODE DList::get(bool pRev) {
 
 } //da d
 
-PDNODE DList:: search(string pNombre) { //busca el nombre en la lista
+PDNODE DList:: search(string pNombre) { 
 
     PDNODE lTemp = aHead; 
 
     while (lTemp) {
-        if (pNombre <= lTemp->sNombre) { //Verifica que un string sea más pequeño que el otro.
-            return lTemp; //si es más pequeño o igual te da un string.
+        if (pNombre <= lTemp->sNombre) { 
+            return lTemp; 
         }
 
-        lTemp = lTemp->sNext; //accede al siguiente nodo
+        lTemp = lTemp->sNext; 
     }
 
     return NULL;
@@ -194,26 +194,26 @@ PDNODE DList:: search(string pNombre) { //busca el nombre en la lista
 void DList::push(string pNombre) {
 
     if (aHead == NULL) {
-        aHead = getNewNode(pNombre); //crea nuevo nodo
-        aTail = aHead; //si la lista está vacía, el atail y el ahead están en el mismo lugar
+        aHead = getNewNode(pNombre); 
+        aTail = aHead; 
 
     }
     else {
-        if (pNombre <= aHead->sNombre) { //ingresa un nombre menor al nombre en el head, entonces lo meterá antes
+        if (pNombre <= aHead->sNombre) { 
             push_front(pNombre);
         }
         else {
 
-            if (pNombre >= aTail->sNombre) { //ingresa un nombre mayor al nombre en la cola, entonces lo meterá después
+            if (pNombre >= aTail->sNombre) {
                 push_back(pNombre);
 
             }
             else
             {
-                PDNODE lItem = search(pNombre); //encuentra el lugar disponible o busca un lugar donde guardarlo.
+                PDNODE lItem = search(pNombre);
                 if (lItem) {
 
-                    PDNODE lTemp = getNewNode(pNombre); //EL NUEVO DIGITO QUE SE QUIERE AGREGAR
+                    PDNODE lTemp = getNewNode(pNombre); 
                     lTemp->sNext = lItem;
                     lTemp->sPrev = lItem->sPrev;
                     lItem->sPrev->sNext = lTemp;
@@ -227,26 +227,22 @@ void DList::push(string pNombre) {
 
         }
     }
-}//push ordenado
+}
 
-/*void DList::repr(void) {
 
-    if (aHead) {
-        PDNODE lTemp = aHead;
-        while (lTemp) {
-            cout << "->"<<lTemp->sNombre;
-            lTemp = lTemp->sNext;
-        }
-        cout << "-> ||" << endl;
+void DList::pushv(vector<string> pVector){
+    for(auto i:pVector){
+        push(i);
     }
+}
 
-} //repr*/
+
 
 bool DList::isEmpty(void) {
     return (aHead == NULL);
 }
 
-void DList::repr(bool pRev) { //si pRev es falso, recorre en orden, si es cierto, recorre la lista inversamente (de aTail a aHead)
+void DList::repr(bool pRev) { 
 
     if (aHead) {
         PDNODE lTemp = (pRev== false ? aHead : aTail); 
@@ -257,7 +253,7 @@ void DList::repr(bool pRev) { //si pRev es falso, recorre en orden, si es cierto
         cout << "-> ||" << endl;
     }
 
-} //repr inverso (recorre de la Tail)
+} 
 
 PDNODE DList::getNewNode(string pNombre) {
     PDNODE lTemp = new DNODE;
@@ -270,45 +266,18 @@ PDNODE DList::getNewNode(string pNombre) {
     }
 
     return lTemp;
-} // Obtener un nuevo nodo
-
+}
 
 int main()
 {
     DList lLista = DList();
 
-    lLista.push("Peter Parker");
-    lLista.push("Peter Adams");
-    lLista.push("Peter Zi");
-    lLista.push("Clark Kent");
-    lLista.push("Diana Prince");
-    lLista.push("alice");
-    lLista.push("007");
+    vector<string> lCantantes;
 
-    lLista.repr(false);
-    /*PDNODE lPtr = lLista.top_front();
-    if (lPtr) {
-        cout << "1ero: " << lPtr->sNombre << endl;
-    }
+    lCantantes.push_back("Michael Jackson");
+    lCantantes.push_back("Lady Gaga");
 
-    lLista.pop_front();
-    lLista.repr();
-    lLista.pop_back();
-    lLista.repr();
-
-    while (!lLista.isEmpty()) {
-        lLista.pop_front();
-    }
-
-    cout << "------------" << endl;
-    lLista.repr(false); */
-
-
-    PDNODE lTemp = NULL;
-    while (lTemp = lLista.get(true)) {
-        cout << "Nombre: " << lTemp -> sNombre << endl;
-    }
-
+    lLista.pushv(lCantantes);
     lLista.repr();
 }
 
