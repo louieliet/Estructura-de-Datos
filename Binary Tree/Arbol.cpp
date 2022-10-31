@@ -213,3 +213,46 @@ PTNODE Arbol::getNewNode(string pVal){
     return lTemp;
 }
 
+void Arbol::read(string pPath){
+    auto lStart = chrono::high_resolution_clock::now();
+    string lLine = " ";
+    ifstream lFile(pPath);
+
+    while(getline(lFile, lLine))
+    {
+        push(lLine);
+    }
+
+    lFile.close();
+
+    auto lElapsed = chrono::high_resolution_clock::now() - lStart;
+    long long lMS = chrono::duration_cast<std::chrono::microseconds> (lElapsed).count();
+    cout << lMS << "ms" << endl;
+}
+
+void Arbol::write(string pPath, Orden pOrd){
+    if(aRoot){
+        PTNODE lTemp = aRoot;
+        stack<PTNODE> lStack;
+        ofstream lFile(pPath);
+
+        if(lFile.is_open()){
+            while(lTemp || (lStack.empty() == false)){
+                switch(pOrd){
+                    case Orden::asc:
+                        if(lTemp){
+                            lStack.push(lTemp);
+                            lTemp = lTemp->sLeft;
+                        }
+                        else{
+                            lTemp = lStack.top();
+                            lStack.pop();
+                            lFile << lTemp->sVal << endl;
+                        }
+                }
+            }
+        }
+    }
+}
+
+

@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include <stack>
+#include <chrono>
+#include <fstream>
+
 
 using namespace std;
 
@@ -28,6 +31,9 @@ public:
     void repr(Orden pOrd = Orden::asc);
     void delr(string pVal);
     void runGet(void(*pFunc)(string));
+
+    void read(string pPath);
+    void write(string pPath, Orden pOrd = Orden::sinorden);
 private:
     PTNODE getNewNode(string pVal);
     PTNODE pdelr(PTNODE pSub, string pVal);
