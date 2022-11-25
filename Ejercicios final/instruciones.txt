@@ -1,0 +1,32 @@
+
+Programe lo necesario para resolver lo siguiente: 
+
+Antecedentes para 1, 2, y 3:
+	- Le dan un archivo de log de un web server, que cada campo se separa por el carácter ;
+	- Uno de los campos importantes es la ruta accedida, otro es el IP desde el que se hace la llamada.
+
+1.-
+	- Use un árbol binario para poder determinar las distintas rutas que le han solicitado al web server y la frecuencia de llamadas.
+
+2.-
+	- Use otro árbol, con el mismo propósito, pero con la IP del cliente.
+
+3.-
+	- Ahora, desea saber no solamente las rutas y su frecuencia, sino que además la freciencia del error de la llamada,
+  es decir, al ser llamada una ruta, el WS pudo haber respondido bien, que es un código 200, o con error un 500 o no encontrar la ruta, un 404.
+	
+---
+
+4.-
+	- Haga una cortina, en la que cada nodo horizontal es el renglón de un archivo de texto.
+	- Pero, dentro del renglón hay varias frases, es decir, terminan con .
+	- Franccione el renglón en frases y que estén en una lista vertical dependiente de la horizontal.
+	
+---
+
+5.-
+	- Le dan un archivo enorme con los tweets de un par de horas, de una región del mundo.
+	- Toma cada renglón y lo fracciona por espacios.
+	- Solamente lo que inicie con # lo inserta en un árbol binario con frecuencia.
+	- Debe indicar los 10 hashtags más populares.
+
