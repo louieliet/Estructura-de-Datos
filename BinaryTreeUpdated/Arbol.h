@@ -5,13 +5,18 @@
 #include <stack>
 #include <chrono>
 #include <string>
+#include <sstream> 
+#include <vector>
 
 using namespace std;
 
 typedef struct TNODE* PTNODE;
 
+
+
 struct TNODE {
 	string sVal;
+	int sFreq;
 	PTNODE sLft;
 	PTNODE sRgt;
 };

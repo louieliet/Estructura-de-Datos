@@ -76,6 +76,9 @@ void Arbol::push(string pVal)
 					lTemp = NULL;
 				}
 			}
+			else if (pVal == lTemp->sVal){
+				(lTemp->sFreq)++;
+			}
 			else {
 				// Iguales
 				if (lTemp->sRgt)
@@ -175,7 +178,7 @@ void Arbol::repr(Orden pOrd)
 				break;
 			case Orden::sinorden:
 				if (lTemp) {
-					cout << lTemp->sVal << ", ";
+					cout << lTemp->sVal << "with " << lTemp->sFreq <<", ";
 					lStack.push(lTemp);
 					lTemp = lTemp->sLft;
 				}
@@ -195,10 +198,18 @@ void Arbol::read(string pPath)
 	auto lStart = chrono::high_resolution_clock::now();
 	string lLine = "";
 	ifstream lFile(pPath);
+	vector<string> list;
 
-	while (getline(lFile, lLine)) {
-		push(lLine);
+	while (getline(lFile, lLine,';')) {
+		list.push_back(lLine);
 	}
+
+	for(auto i : list){
+		if(i[0] == 'w'){
+			push(i);
+		}
+	}
+	
 
 	lFile.close();
 
@@ -316,6 +327,7 @@ PTNODE Arbol::getNewNode(string pVal)
 
 	if (lTemp) {
 		lTemp->sVal = pVal;
+		lTemp->sFreq = 1;
 		lTemp->sLft = NULL;
 		lTemp->sRgt = NULL;
 	}

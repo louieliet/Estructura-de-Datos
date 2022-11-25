@@ -13,7 +13,7 @@ int main()
 {
 	Arbol lArb = Arbol();
 
-	lArb.push("1");
+	/*lArb.push("1");
 	lArb.push("3");
 	lArb.push("2");
 	lArb.push("5");
@@ -24,7 +24,12 @@ int main()
 	lArb.reprr(Orden::asc);
 	cout << endl;
 	lArb.reprr(Orden::desc);
-	cout << endl;
+	cout << endl;*/
+
+	
+	lArb.read("archivo.txt");
+
+	lArb.repr(Orden::sinorden);
 
 	// 5,1,2
 	//   	2
@@ -35,8 +40,5 @@ int main()
 	//5,2,1 decendente
 	//2riz ,1ram,5ram sin orden
 	
-
-	
-
 
 }
