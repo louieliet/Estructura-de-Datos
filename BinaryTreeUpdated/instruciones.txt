@@ -30,3 +30,17 @@ Antecedentes para 1, 2, y 3:
 	- Solamente lo que inicie con # lo inserta en un árbol binario con frecuencia.
 	- Debe indicar los 10 hashtags más populares.
 
+
+google.com;192.64.41;500
+fb.com;182.64.41
+twt.com;192.64.42
+fb.com;192.64.56
+google.com;192.64.41
+
+
+ # - # - # - # 
+ |   |   |   |
+ 0   0   0   0
+
+
+
