@@ -268,6 +268,7 @@ void DLHor::clean(void)
 
 void DLHor::push(string pCat, string pMain, string pExtra)
 {
+    
     if (aHead == NULL) {
         aHead = getNewNode(pCat);
         aTail = aHead;

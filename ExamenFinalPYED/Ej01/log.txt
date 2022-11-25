@@ -1,0 +1,2 @@
+2021-12-24;19:54:32.123;hacker;145.172.200.10;/usr/hacker/mitarea.txt;up;0
+2021-12-24;19:54:32.123;Emi;192.172.200.10;/usr/hacker/mitarea.txt;up;1
